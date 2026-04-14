@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 720" preserveAspectRatio="xMidYMid meet">
+
+  <defs>
+   <style type="text/css">
+    .bg { fill: #FFFFFF; }
+    .title { font-family: Arial, sans-serif; font-size: 22px; font-weight: bold; fill: #333333; }
+    .subtitle { font-family: Arial, sans-serif; font-size: 14px; fill: #666666; }
+    .axis-line { stroke: #CCCCCC; stroke-width: 1; fill: none; }
+    .axis-line-bold { stroke: #999999; stroke-width: 1.5; fill: none; }
+    .tick-label { font-family: Arial, sans-serif; font-size: 12px; fill: #666666; text-anchor: middle; }
+    .y-tick-label { font-family: Arial, sans-serif; font-size: 12px; fill: #666666; text-anchor: end; }
+    .bar-label { font-family: Arial, sans-serif; font-size: 11px; fill: #333333; text-anchor: end; }
+    .legend-text { font-family: Arial, sans-serif; font-size: 11px; fill: #333333; }
+    .source-text { font-family: Arial, sans-serif; font-size: 10px; fill: #999999; }
+   </style>
+  </defs>
+  <rect class="bg" x="0" y="0" width="960" height="720" />
+  <text class="title" x="70" y="42">South Africa Rand vs USD</text>
+  <text class="subtitle" x="70" y="72">ZAR per USD</text>
+  <line class="axis-line" x1="80" y1="95" x2="920" y2="95" />
+  <text class="y-tick-label" x="72" y="99">20.0</text>
+  <line class="axis-line" x1="80" y1="176" x2="920" y2="176" />
+  <text class="y-tick-label" x="72" y="180">16.7</text>
+  <line class="axis-line" x1="80" y1="257" x2="920" y2="257" />
+  <text class="y-tick-label" x="72" y="261">13.4</text>
+  <line class="axis-line" x1="80" y1="338" x2="920" y2="338" />
+  <text class="y-tick-label" x="72" y="342">10.0</text>
+  <line class="axis-line" x1="80" y1="418" x2="920" y2="418" />
+  <text class="y-tick-label" x="72" y="422">6.7</text>
+  <line class="axis-line" x1="80" y1="499" x2="920" y2="499" />
+  <text class="y-tick-label" x="72" y="503">3.4</text>
+  <line class="axis-line" x1="80" y1="580" x2="920" y2="580" />
+  <text class="y-tick-label" x="72" y="584">0.0</text>
+  <line class="axis-line-bold" x1="80" y1="338" x2="920" y2="338" />
+  <text class="tick-label" x="80" y="602">2018</text>
+  <text class="tick-label" x="195" y="602">2019</text>
+  <text class="tick-label" x="319" y="602">2020</text>
+  <text class="tick-label" x="434" y="602">2021</text>
+  <text class="tick-label" x="557" y="602">2022</text>
+  <text class="tick-label" x="672" y="602">2023</text>
+  <text class="tick-label" x="796" y="602">2024</text>
+  <text class="tick-label" x="920" y="602">2025</text>
+  <line class="axis-line-bold" x1="80" y1="580" x2="920" y2="580" />
+  <line class="axis-line-bold" x1="80" y1="95" x2="80" y2="580" />
+  <polyline points="80,178 89,135 98,153 107,166 115,188 124,213 133,229 142,264 151,288 160,327 168,362 177,400 186,412 195,428 204,457 213,445 221,446 230,456 239,466 248,427 257,421 266,409 275,471 283,487 292,539 301,540 310,530 319,540 328,527 336,540 345,525 354,540 363,540 372,529 381,515 389,518 398,471 407,480 416,491 425,540 434,496 443,505 451,533 460,500 469,470 478,467 487,501 496,490 504,505 513,533 522,507 531,540 540,525 549,514 557,464 566,455 575,505 584,524 593,522 602,513 611,489 619,536 628,540 637,516 646,478 655,432 664,441 672,414 681,372 690,343 699,325 708,304 717,323 725,357 734,333 743,341 752,341 761,355 770,364 779,357 787,382 796,380 805,373 814,375 823,392 832,373 840,327 849,341 858,310 867,288 876,352 885,370 893,385 902,366 911,361 920,349" fill="none" stroke="#FD79A8" stroke-width="2" />
+</svg>

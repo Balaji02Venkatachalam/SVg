@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 720" preserveAspectRatio="xMidYMid meet">
+
+  <defs>
+   <style type="text/css">
+    .bg { fill: #FFFFFF; }
+    .title { font-family: Arial, sans-serif; font-size: 22px; font-weight: bold; fill: #333333; }
+    .subtitle { font-family: Arial, sans-serif; font-size: 14px; fill: #666666; }
+    .axis-line { stroke: #CCCCCC; stroke-width: 1; fill: none; }
+    .axis-line-bold { stroke: #999999; stroke-width: 1.5; fill: none; }
+    .tick-label { font-family: Arial, sans-serif; font-size: 12px; fill: #666666; text-anchor: middle; }
+    .y-tick-label { font-family: Arial, sans-serif; font-size: 12px; fill: #666666; text-anchor: end; }
+    .bar-label { font-family: Arial, sans-serif; font-size: 11px; fill: #333333; text-anchor: end; }
+    .legend-text { font-family: Arial, sans-serif; font-size: 11px; fill: #333333; }
+    .source-text { font-family: Arial, sans-serif; font-size: 10px; fill: #999999; }
+   </style>
+  </defs>
+  <rect class="bg" x="0" y="0" width="960" height="720" />
+  <text class="title" x="70" y="42">Central Bank Policy Rates</text>
+  <text class="subtitle" x="70" y="72">Per cent</text>
+  <line class="axis-line" x1="80" y1="95" x2="920" y2="95" />
+  <text class="y-tick-label" x="72" y="99">6.1</text>
+  <line class="axis-line" x1="80" y1="176" x2="920" y2="176" />
+  <text class="y-tick-label" x="72" y="180">4.9</text>
+  <line class="axis-line" x1="80" y1="257" x2="920" y2="257" />
+  <text class="y-tick-label" x="72" y="261">3.8</text>
+  <line class="axis-line" x1="80" y1="338" x2="920" y2="338" />
+  <text class="y-tick-label" x="72" y="342">2.7</text>
+  <line class="axis-line" x1="80" y1="418" x2="920" y2="418" />
+  <text class="y-tick-label" x="72" y="422">1.6</text>
+  <line class="axis-line" x1="80" y1="499" x2="920" y2="499" />
+  <text class="y-tick-label" x="72" y="503">0.5</text>
+  <line class="axis-line" x1="80" y1="580" x2="920" y2="580" />
+  <text class="y-tick-label" x="72" y="584">-0.7</text>
+  <line class="axis-line" x1="80" y1="580" x2="80" y2="586" />
+  <text class="tick-label" x="80" y="602">2018</text>
+  <line class="axis-line" x1="200" y1="580" x2="200" y2="586" />
+  <text class="tick-label" x="200" y="602">2019</text>
+  <line class="axis-line" x1="320" y1="580" x2="320" y2="586" />
+  <text class="tick-label" x="320" y="602">2020</text>
+  <line class="axis-line" x1="440" y1="580" x2="440" y2="586" />
+  <text class="tick-label" x="440" y="602">2021</text>
+  <line class="axis-line" x1="560" y1="580" x2="560" y2="586" />
+  <text class="tick-label" x="560" y="602">2022</text>
+  <line class="axis-line" x1="680" y1="580" x2="680" y2="586" />
+  <text class="tick-label" x="680" y="602">2023</text>
+  <line class="axis-line" x1="800" y1="580" x2="800" y2="586" />
+  <text class="tick-label" x="800" y="602">2024</text>
+  <line class="axis-line" x1="920" y1="580" x2="920" y2="586" />
+  <text class="tick-label" x="920" y="602">2025</text>
+  <line class="axis-line-bold" x1="80" y1="580" x2="920" y2="580" />
+  <line class="axis-line-bold" x1="80" y1="95" x2="80" y2="580" />
+  <polyline points="80,352 200,406 320,514 440,514 560,208 680,135 800,153 920,208" fill="none" stroke="#E63946" stroke-width="2.5" />
+  <polyline points="80,532 200,532 320,532 440,532 560,352 680,208 800,244 920,316" fill="none" stroke="#457B9D" stroke-width="2.5" />
+  <polyline points="80,478 200,478 320,525 440,514 560,280 680,153 800,172 920,208" fill="none" stroke="#2A9D8F" stroke-width="2.5" />
+  <polyline points="80,540 200,540 320,540 440,540 560,540 680,540 800,514 920,496" fill="none" stroke="#E9C46A" stroke-width="2.5" />
+  <line x1="80" y1="650" x2="100" y2="650" stroke="#E63946" stroke-width="2.5" />
+  <text class="legend-text" x="105" y="654">US Fed</text>
+  <line x1="260" y1="650" x2="280" y2="650" stroke="#457B9D" stroke-width="2.5" />
+  <text class="legend-text" x="285" y="654">ECB</text>
+  <line x1="440" y1="650" x2="460" y2="650" stroke="#2A9D8F" stroke-width="2.5" />
+  <text class="legend-text" x="465" y="654">BoE</text>
+  <line x1="620" y1="650" x2="640" y2="650" stroke="#E9C46A" stroke-width="2.5" />
+  <text class="legend-text" x="645" y="654">BoJ</text>
+</svg>

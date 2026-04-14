@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 720" preserveAspectRatio="xMidYMid meet">
+
+  <defs>
+   <style type="text/css">
+    .bg { fill: #FFFFFF; }
+    .title { font-family: Arial, sans-serif; font-size: 22px; font-weight: bold; fill: #333333; }
+    .subtitle { font-family: Arial, sans-serif; font-size: 14px; fill: #666666; }
+    .axis-line { stroke: #CCCCCC; stroke-width: 1; fill: none; }
+    .axis-line-bold { stroke: #999999; stroke-width: 1.5; fill: none; }
+    .tick-label { font-family: Arial, sans-serif; font-size: 12px; fill: #666666; text-anchor: middle; }
+    .y-tick-label { font-family: Arial, sans-serif; font-size: 12px; fill: #666666; text-anchor: end; }
+    .bar-label { font-family: Arial, sans-serif; font-size: 11px; fill: #333333; text-anchor: end; }
+    .legend-text { font-family: Arial, sans-serif; font-size: 11px; fill: #333333; }
+    .source-text { font-family: Arial, sans-serif; font-size: 10px; fill: #999999; }
+   </style>
+  </defs>
+  <rect class="bg" x="0" y="0" width="960" height="720" />
+  <text class="title" x="70" y="42">Turkey Lira vs USD</text>
+  <text class="subtitle" x="70" y="72">TRY per USD</text>
+  <line class="axis-line" x1="80" y1="95" x2="920" y2="95" />
+  <text class="y-tick-label" x="72" y="99">68.3</text>
+  <line class="axis-line" x1="80" y1="176" x2="920" y2="176" />
+  <text class="y-tick-label" x="72" y="180">58.3</text>
+  <line class="axis-line" x1="80" y1="257" x2="920" y2="257" />
+  <text class="y-tick-label" x="72" y="261">48.3</text>
+  <line class="axis-line" x1="80" y1="338" x2="920" y2="338" />
+  <text class="y-tick-label" x="72" y="342">38.2</text>
+  <line class="axis-line" x1="80" y1="418" x2="920" y2="418" />
+  <text class="y-tick-label" x="72" y="422">28.2</text>
+  <line class="axis-line" x1="80" y1="499" x2="920" y2="499" />
+  <text class="y-tick-label" x="72" y="503">18.2</text>
+  <line class="axis-line" x1="80" y1="580" x2="920" y2="580" />
+  <text class="y-tick-label" x="72" y="584">8.2</text>
+  <line class="axis-line-bold" x1="80" y1="337" x2="920" y2="337" />
+  <text class="tick-label" x="80" y="602">2018</text>
+  <text class="tick-label" x="195" y="602">2019</text>
+  <text class="tick-label" x="319" y="602">2020</text>
+  <text class="tick-label" x="434" y="602">2021</text>
+  <text class="tick-label" x="557" y="602">2022</text>
+  <text class="tick-label" x="672" y="602">2023</text>
+  <text class="tick-label" x="796" y="602">2024</text>
+  <text class="tick-label" x="920" y="602">2025</text>
+  <line class="axis-line-bold" x1="80" y1="580" x2="920" y2="580" />
+  <line class="axis-line-bold" x1="80" y1="95" x2="80" y2="580" />
+  <polyline points="80,467 89,486 98,502 107,529 115,531 124,531 133,524 142,540 151,515 160,491 168,451 177,431 186,424 195,406 204,388 213,402 221,368 230,324 239,274 248,271 257,260 266,248 275,246 283,228 292,229 301,231 310,186 319,180 328,176 336,152 345,146 354,136 363,135 372,163 381,161 389,186 398,178 407,205 416,180 425,159 434,150 443,150 451,138 460,183 469,207 478,208 487,197 496,197 504,219 513,213 522,222 531,245 540,235 549,237 557,206 566,188 575,167 584,157 593,175 602,195 611,229 619,156 628,180 637,183 646,189 655,193 664,205 672,248 681,270 690,301 699,302 708,316 717,330 725,322 734,334 743,309 752,316 761,308 770,338 779,319 787,327 796,314 805,304 814,306 823,298 832,305 840,270 849,245 858,231 867,257 876,281 885,295 893,298 902,285 911,304 920,273" fill="none" stroke="#00B894" stroke-width="2" />
+</svg>

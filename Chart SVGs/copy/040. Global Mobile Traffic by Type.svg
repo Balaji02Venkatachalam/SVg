@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 720" preserveAspectRatio="xMidYMid meet">
+
+  <defs>
+   <style type="text/css">
+    .bg { fill: #FFFFFF; }
+    .title { font-family: Arial, sans-serif; font-size: 22px; font-weight: bold; fill: #333333; }
+    .subtitle { font-family: Arial, sans-serif; font-size: 14px; fill: #666666; }
+    .axis-line { stroke: #CCCCCC; stroke-width: 1; fill: none; }
+    .axis-line-bold { stroke: #999999; stroke-width: 1.5; fill: none; }
+    .tick-label { font-family: Arial, sans-serif; font-size: 12px; fill: #666666; text-anchor: middle; }
+    .y-tick-label { font-family: Arial, sans-serif; font-size: 12px; fill: #666666; text-anchor: end; }
+    .bar-label { font-family: Arial, sans-serif; font-size: 11px; fill: #333333; text-anchor: end; }
+    .legend-text { font-family: Arial, sans-serif; font-size: 11px; fill: #333333; }
+    .source-text { font-family: Arial, sans-serif; font-size: 10px; fill: #999999; }
+   </style>
+  </defs>
+  <rect class="bg" x="0" y="0" width="960" height="720" />
+  <text class="title" x="70" y="42">Global Mobile Traffic by Type</text>
+  <text class="subtitle" x="70" y="72">Exabytes per month</text>
+  <line class="axis-line" x1="80" y1="95" x2="920" y2="95" />
+  <text class="y-tick-label" x="72" y="99">153.0</text>
+  <line class="axis-line" x1="80" y1="176" x2="920" y2="176" />
+  <text class="y-tick-label" x="72" y="180">127.5</text>
+  <line class="axis-line" x1="80" y1="257" x2="920" y2="257" />
+  <text class="y-tick-label" x="72" y="261">102.0</text>
+  <line class="axis-line" x1="80" y1="338" x2="920" y2="338" />
+  <text class="y-tick-label" x="72" y="342">76.5</text>
+  <line class="axis-line" x1="80" y1="418" x2="920" y2="418" />
+  <text class="y-tick-label" x="72" y="422">51.0</text>
+  <line class="axis-line" x1="80" y1="499" x2="920" y2="499" />
+  <text class="y-tick-label" x="72" y="503">25.5</text>
+  <line class="axis-line" x1="80" y1="580" x2="920" y2="580" />
+  <text class="y-tick-label" x="72" y="584">0.0</text>
+  <text class="tick-label" x="80" y="602">2018</text>
+  <text class="tick-label" x="200" y="602">2019</text>
+  <text class="tick-label" x="320" y="602">2020</text>
+  <text class="tick-label" x="440" y="602">2021</text>
+  <text class="tick-label" x="560" y="602">2022</text>
+  <text class="tick-label" x="680" y="602">2023</text>
+  <text class="tick-label" x="800" y="602">2024</text>
+  <text class="tick-label" x="920" y="602">2025</text>
+  <line class="axis-line-bold" x1="80" y1="580" x2="920" y2="580" />
+  <line class="axis-line-bold" x1="80" y1="95" x2="80" y2="580" />
+  <polygon points="80,498 200,472 320,437 440,390 560,339 680,273 800,187 920,95 920,136 800,225 680,307 560,371 440,418 320,463 200,494 80,517" fill="#2A9D8F" fill-opacity="0.7" stroke="#2A9D8F" stroke-width="1" />
+  <polygon points="80,517 200,494 320,463 440,418 560,371 680,307 800,225 920,136 920,200 800,279 680,352 560,406 440,447 320,485 200,510 80,529" fill="#457B9D" fill-opacity="0.7" stroke="#457B9D" stroke-width="1" />
+  <polygon points="80,529 200,510 320,485 440,447 560,406 680,352 800,279 920,200 920,580 800,580 680,580 560,580 440,580 320,580 200,580 80,580" fill="#E63946" fill-opacity="0.7" stroke="#E63946" stroke-width="1" />
+  <rect x="80" y="644" width="14" height="14" fill="#E63946" fill-opacity="0.7" />
+  <text class="legend-text" x="100" y="655">Video</text>
+  <rect x="260" y="644" width="14" height="14" fill="#457B9D" fill-opacity="0.7" />
+  <text class="legend-text" x="280" y="655">Social Media</text>
+  <rect x="440" y="644" width="14" height="14" fill="#2A9D8F" fill-opacity="0.7" />
+  <text class="legend-text" x="460" y="655">Web/Other</text>
+</svg>

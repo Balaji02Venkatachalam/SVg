@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 720" preserveAspectRatio="xMidYMid meet">
+
+  <defs>
+   <style type="text/css">
+    .bg { fill: #FFFFFF; }
+    .title { font-family: Arial, sans-serif; font-size: 22px; font-weight: bold; fill: #333333; }
+    .subtitle { font-family: Arial, sans-serif; font-size: 14px; fill: #666666; }
+    .axis-line { stroke: #CCCCCC; stroke-width: 1; fill: none; }
+    .axis-line-bold { stroke: #999999; stroke-width: 1.5; fill: none; }
+    .tick-label { font-family: Arial, sans-serif; font-size: 12px; fill: #666666; text-anchor: middle; }
+    .y-tick-label { font-family: Arial, sans-serif; font-size: 12px; fill: #666666; text-anchor: end; }
+    .bar-label { font-family: Arial, sans-serif; font-size: 11px; fill: #333333; text-anchor: end; }
+    .legend-text { font-family: Arial, sans-serif; font-size: 11px; fill: #333333; }
+    .source-text { font-family: Arial, sans-serif; font-size: 10px; fill: #999999; }
+   </style>
+  </defs>
+  <rect class="bg" x="0" y="0" width="960" height="720" />
+  <text class="title" x="70" y="42">US Weekly Jobless Claims</text>
+  <text class="subtitle" x="70" y="72">Thousands, seasonally adjusted</text>
+  <line class="axis-line" x1="80" y1="95" x2="920" y2="95" />
+  <text class="y-tick-label" x="72" y="99">447.7</text>
+  <line class="axis-line" x1="80" y1="176" x2="920" y2="176" />
+  <text class="y-tick-label" x="72" y="180">370.9</text>
+  <line class="axis-line" x1="80" y1="257" x2="920" y2="257" />
+  <text class="y-tick-label" x="72" y="261">294.0</text>
+  <line class="axis-line" x1="80" y1="338" x2="920" y2="338" />
+  <text class="y-tick-label" x="72" y="342">217.1</text>
+  <line class="axis-line" x1="80" y1="418" x2="920" y2="418" />
+  <text class="y-tick-label" x="72" y="422">140.3</text>
+  <line class="axis-line" x1="80" y1="499" x2="920" y2="499" />
+  <text class="y-tick-label" x="72" y="503">63.4</text>
+  <line class="axis-line" x1="80" y1="580" x2="920" y2="580" />
+  <text class="y-tick-label" x="72" y="584">-13.4</text>
+  <line class="axis-line-bold" x1="80" y1="566" x2="920" y2="566" />
+  <text class="tick-label" x="80" y="602">2020</text>
+  <text class="tick-label" x="246" y="602">2021</text>
+  <text class="tick-label" x="411" y="602">2022</text>
+  <text class="tick-label" x="577" y="602">2023</text>
+  <text class="tick-label" x="743" y="602">2024</text>
+  <text class="tick-label" x="920" y="602">2025</text>
+  <line class="axis-line-bold" x1="80" y1="580" x2="920" y2="580" />
+  <line class="axis-line-bold" x1="80" y1="95" x2="80" y2="580" />
+  <polyline points="80,332 92,313 104,282 115,251 127,193 139,217 151,170 163,204 175,221 186,171 198,137 210,137 222,188 234,165 246,192 257,231 269,259 281,249 293,339 305,324 317,318 328,343 340,300 352,274 364,300 376,329 388,300 399,365 411,379 423,406 435,404 447,396 459,395 470,347 482,338 494,352 506,403 518,374 530,352 541,291 553,323 565,323 577,326 589,330 601,330 612,403 624,369 636,342 648,295 660,200 672,214 683,216 695,217 707,135 719,209 731,189 743,251 754,360 766,446 778,505 790,460 802,497 814,507 825,540 837,514 849,540 861,485 873,527 885,540 896,535 908,534 920,475" fill="none" stroke="#F4A261" stroke-width="2" />
+</svg>

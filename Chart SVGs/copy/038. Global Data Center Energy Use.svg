@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 720" preserveAspectRatio="xMidYMid meet">
+
+  <defs>
+   <style type="text/css">
+    .bg { fill: #FFFFFF; }
+    .title { font-family: Arial, sans-serif; font-size: 22px; font-weight: bold; fill: #333333; }
+    .subtitle { font-family: Arial, sans-serif; font-size: 14px; fill: #666666; }
+    .axis-line { stroke: #CCCCCC; stroke-width: 1; fill: none; }
+    .axis-line-bold { stroke: #999999; stroke-width: 1.5; fill: none; }
+    .tick-label { font-family: Arial, sans-serif; font-size: 12px; fill: #666666; text-anchor: middle; }
+    .y-tick-label { font-family: Arial, sans-serif; font-size: 12px; fill: #666666; text-anchor: end; }
+    .bar-label { font-family: Arial, sans-serif; font-size: 11px; fill: #333333; text-anchor: end; }
+    .legend-text { font-family: Arial, sans-serif; font-size: 11px; fill: #333333; }
+    .source-text { font-family: Arial, sans-serif; font-size: 10px; fill: #999999; }
+   </style>
+  </defs>
+  <rect class="bg" x="0" y="0" width="960" height="720" />
+  <text class="title" x="70" y="42">Global Data Center Energy Use</text>
+  <text class="subtitle" x="70" y="72">Terawatt hours</text>
+  <line class="axis-line" x1="80" y1="95" x2="920" y2="95" />
+  <text class="y-tick-label" x="72" y="99">365.0</text>
+  <line class="axis-line" x1="80" y1="176" x2="920" y2="176" />
+  <text class="y-tick-label" x="72" y="180">304.2</text>
+  <line class="axis-line" x1="80" y1="257" x2="920" y2="257" />
+  <text class="y-tick-label" x="72" y="261">243.3</text>
+  <line class="axis-line" x1="80" y1="338" x2="920" y2="338" />
+  <text class="y-tick-label" x="72" y="342">182.5</text>
+  <line class="axis-line" x1="80" y1="418" x2="920" y2="418" />
+  <text class="y-tick-label" x="72" y="422">121.7</text>
+  <line class="axis-line" x1="80" y1="499" x2="920" y2="499" />
+  <text class="y-tick-label" x="72" y="503">60.8</text>
+  <line class="axis-line" x1="80" y1="580" x2="920" y2="580" />
+  <text class="y-tick-label" x="72" y="584">0.0</text>
+  <text class="tick-label" x="80" y="602">2018</text>
+  <text class="tick-label" x="200" y="602">2019</text>
+  <text class="tick-label" x="320" y="602">2020</text>
+  <text class="tick-label" x="440" y="602">2021</text>
+  <text class="tick-label" x="560" y="602">2022</text>
+  <text class="tick-label" x="680" y="602">2023</text>
+  <text class="tick-label" x="800" y="602">2024</text>
+  <text class="tick-label" x="920" y="602">2025</text>
+  <line class="axis-line-bold" x1="80" y1="580" x2="920" y2="580" />
+  <line class="axis-line-bold" x1="80" y1="95" x2="80" y2="580" />
+  <polygon points="80,351 200,339 320,321 440,304 560,274 680,235 800,168 920,95 920,208 800,241 680,274 560,294 440,314 320,328 200,343 80,354" fill="#E63946" fill-opacity="0.7" stroke="#E63946" stroke-width="1" />
+  <polygon points="80,354 200,343 320,328 440,314 560,294 680,274 800,241 920,208 920,474 800,467 680,460 560,454 440,447 320,440 200,436 80,434" fill="#457B9D" fill-opacity="0.7" stroke="#457B9D" stroke-width="1" />
+  <polygon points="80,434 200,436 320,440 440,447 560,454 680,460 800,467 920,474 920,580 800,580 680,580 560,580 440,580 320,580 200,580 80,580" fill="#666666" fill-opacity="0.7" stroke="#666666" stroke-width="1" />
+  <rect x="80" y="644" width="14" height="14" fill="#666666" fill-opacity="0.7" />
+  <text class="legend-text" x="100" y="655">Traditional</text>
+  <rect x="260" y="644" width="14" height="14" fill="#457B9D" fill-opacity="0.7" />
+  <text class="legend-text" x="280" y="655">Hyperscale</text>
+  <rect x="440" y="644" width="14" height="14" fill="#E63946" fill-opacity="0.7" />
+  <text class="legend-text" x="460" y="655">AI Training</text>
+</svg>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 720" preserveAspectRatio="xMidYMid meet">
+
+  <defs>
+   <style type="text/css">
+    .bg { fill: #FFFFFF; }
+    .title { font-family: Arial, sans-serif; font-size: 22px; font-weight: bold; fill: #333333; }
+    .subtitle { font-family: Arial, sans-serif; font-size: 14px; fill: #666666; }
+    .axis-line { stroke: #CCCCCC; stroke-width: 1; fill: none; }
+    .axis-line-bold { stroke: #999999; stroke-width: 1.5; fill: none; }
+    .tick-label { font-family: Arial, sans-serif; font-size: 12px; fill: #666666; text-anchor: middle; }
+    .y-tick-label { font-family: Arial, sans-serif; font-size: 12px; fill: #666666; text-anchor: end; }
+    .bar-label { font-family: Arial, sans-serif; font-size: 11px; fill: #333333; text-anchor: end; }
+    .legend-text { font-family: Arial, sans-serif; font-size: 11px; fill: #333333; }
+    .source-text { font-family: Arial, sans-serif; font-size: 10px; fill: #999999; }
+   </style>
+  </defs>
+  <rect class="bg" x="0" y="0" width="960" height="720" />
+  <text class="title" x="70" y="42">Global Sea Level Rise</text>
+  <text class="subtitle" x="70" y="72">Millimetres above 1993 baseline</text>
+  <line class="axis-line" x1="80" y1="95" x2="920" y2="95" />
+  <text class="y-tick-label" x="72" y="99">124.5</text>
+  <line class="axis-line" x1="80" y1="176" x2="920" y2="176" />
+  <text class="y-tick-label" x="72" y="180">105.5</text>
+  <line class="axis-line" x1="80" y1="257" x2="920" y2="257" />
+  <text class="y-tick-label" x="72" y="261">86.5</text>
+  <line class="axis-line" x1="80" y1="338" x2="920" y2="338" />
+  <text class="y-tick-label" x="72" y="342">67.5</text>
+  <line class="axis-line" x1="80" y1="418" x2="920" y2="418" />
+  <text class="y-tick-label" x="72" y="422">48.5</text>
+  <line class="axis-line" x1="80" y1="499" x2="920" y2="499" />
+  <text class="y-tick-label" x="72" y="503">29.5</text>
+  <line class="axis-line" x1="80" y1="580" x2="920" y2="580" />
+  <text class="y-tick-label" x="72" y="584">10.5</text>
+  <line class="axis-line" x1="80" y1="580" x2="80" y2="586" />
+  <text class="tick-label" x="80" y="602">2000</text>
+  <line class="axis-line" x1="181" y1="580" x2="181" y2="586" />
+  <text class="tick-label" x="181" y="602">2003</text>
+  <line class="axis-line" x1="282" y1="580" x2="282" y2="586" />
+  <text class="tick-label" x="282" y="602">2006</text>
+  <line class="axis-line" x1="382" y1="580" x2="382" y2="586" />
+  <text class="tick-label" x="382" y="602">2009</text>
+  <line class="axis-line" x1="483" y1="580" x2="483" y2="586" />
+  <text class="tick-label" x="483" y="602">2012</text>
+  <line class="axis-line" x1="584" y1="580" x2="584" y2="586" />
+  <text class="tick-label" x="584" y="602">2015</text>
+  <line class="axis-line" x1="685" y1="580" x2="685" y2="586" />
+  <text class="tick-label" x="685" y="602">2018</text>
+  <line class="axis-line" x1="786" y1="580" x2="786" y2="586" />
+  <text class="tick-label" x="786" y="602">2021</text>
+  <line class="axis-line" x1="886" y1="580" x2="886" y2="586" />
+  <text class="tick-label" x="886" y="602">2024</text>
+  <line class="axis-line-bold" x1="80" y1="580" x2="920" y2="580" />
+  <line class="axis-line-bold" x1="80" y1="95" x2="80" y2="580" />
+  <polyline points="80,540 114,527 147,506 181,497 214,493 248,476 282,463 315,446 349,433 382,420 416,408 450,395 483,378 517,361 550,344 584,327 618,310 651,289 685,272 718,255 752,242 786,221 819,199 853,178 886,157 920,135" fill="none" stroke="#457B9D" stroke-width="2.5" />
+  <line x1="80" y1="650" x2="100" y2="650" stroke="#457B9D" stroke-width="2.5" />
+  <text class="legend-text" x="105" y="654">Sea Level</text>
+</svg>

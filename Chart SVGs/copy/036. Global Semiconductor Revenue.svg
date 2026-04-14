@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 720" preserveAspectRatio="xMidYMid meet">
+
+  <defs>
+   <style type="text/css">
+    .bg { fill: #FFFFFF; }
+    .title { font-family: Arial, sans-serif; font-size: 22px; font-weight: bold; fill: #333333; }
+    .subtitle { font-family: Arial, sans-serif; font-size: 14px; fill: #666666; }
+    .axis-line { stroke: #CCCCCC; stroke-width: 1; fill: none; }
+    .axis-line-bold { stroke: #999999; stroke-width: 1.5; fill: none; }
+    .tick-label { font-family: Arial, sans-serif; font-size: 12px; fill: #666666; text-anchor: middle; }
+    .y-tick-label { font-family: Arial, sans-serif; font-size: 12px; fill: #666666; text-anchor: end; }
+    .bar-label { font-family: Arial, sans-serif; font-size: 11px; fill: #333333; text-anchor: end; }
+    .legend-text { font-family: Arial, sans-serif; font-size: 11px; fill: #333333; }
+    .source-text { font-family: Arial, sans-serif; font-size: 10px; fill: #999999; }
+   </style>
+  </defs>
+  <rect class="bg" x="0" y="0" width="960" height="720" />
+  <text class="title" x="70" y="42">Global Semiconductor Revenue</text>
+  <text class="subtitle" x="70" y="72">USD billions</text>
+  <line class="axis-line" x1="80" y1="95" x2="920" y2="95" />
+  <text class="y-tick-label" x="72" y="99">625.0</text>
+  <line class="axis-line" x1="80" y1="176" x2="920" y2="176" />
+  <text class="y-tick-label" x="72" y="180">520.8</text>
+  <line class="axis-line" x1="80" y1="257" x2="920" y2="257" />
+  <text class="y-tick-label" x="72" y="261">416.7</text>
+  <line class="axis-line" x1="80" y1="338" x2="920" y2="338" />
+  <text class="y-tick-label" x="72" y="342">312.5</text>
+  <line class="axis-line" x1="80" y1="418" x2="920" y2="418" />
+  <text class="y-tick-label" x="72" y="422">208.3</text>
+  <line class="axis-line" x1="80" y1="499" x2="920" y2="499" />
+  <text class="y-tick-label" x="72" y="503">104.2</text>
+  <line class="axis-line" x1="80" y1="580" x2="920" y2="580" />
+  <text class="y-tick-label" x="72" y="584">0.0</text>
+  <text class="tick-label" x="80" y="602">2015</text>
+  <text class="tick-label" x="164" y="602">2016</text>
+  <text class="tick-label" x="248" y="602">2017</text>
+  <text class="tick-label" x="332" y="602">2018</text>
+  <text class="tick-label" x="416" y="602">2019</text>
+  <text class="tick-label" x="500" y="602">2020</text>
+  <text class="tick-label" x="584" y="602">2021</text>
+  <text class="tick-label" x="668" y="602">2022</text>
+  <text class="tick-label" x="752" y="602">2023</text>
+  <text class="tick-label" x="836" y="602">2024</text>
+  <text class="tick-label" x="920" y="602">2025</text>
+  <line class="axis-line-bold" x1="80" y1="580" x2="920" y2="580" />
+  <line class="axis-line-bold" x1="80" y1="95" x2="80" y2="580" />
+  <polygon points="80,319 164,319 248,278 332,234 416,266 500,253 584,200 668,190 752,201 836,139 920,95 920,231 836,270 752,325 668,311 584,315 500,362 416,370 332,335 248,375 164,414 80,412" fill="#E9C46A" fill-opacity="0.7" stroke="#E9C46A" stroke-width="1" />
+  <polygon points="80,412 164,414 248,375 332,335 416,370 500,362 584,315 668,311 752,325 836,270 920,231 920,293 836,328 752,377 668,367 584,362 500,404 416,412 332,377 248,413 164,450 80,449" fill="#2A9D8F" fill-opacity="0.7" stroke="#2A9D8F" stroke-width="1" />
+  <polygon points="80,449 164,450 248,413 332,377 416,412 500,404 584,362 668,367 752,377 836,328 920,293 920,448 836,471 752,506 668,479 584,461 500,493 416,495 332,457 248,489 164,523 80,520" fill="#457B9D" fill-opacity="0.7" stroke="#457B9D" stroke-width="1" />
+  <polygon points="80,520 164,523 248,489 332,457 416,495 500,493 584,461 668,479 752,506 836,471 920,448 920,580 836,580 752,580 668,580 584,580 500,580 416,580 332,580 248,580 164,580 80,580" fill="#E63946" fill-opacity="0.7" stroke="#E63946" stroke-width="1" />
+  <rect x="80" y="644" width="14" height="14" fill="#E63946" fill-opacity="0.7" />
+  <text class="legend-text" x="100" y="655">Memory</text>
+  <rect x="260" y="644" width="14" height="14" fill="#457B9D" fill-opacity="0.7" />
+  <text class="legend-text" x="280" y="655">Logic</text>
+  <rect x="440" y="644" width="14" height="14" fill="#2A9D8F" fill-opacity="0.7" />
+  <text class="legend-text" x="460" y="655">Analog</text>
+  <rect x="620" y="644" width="14" height="14" fill="#E9C46A" fill-opacity="0.7" />
+  <text class="legend-text" x="640" y="655">Other</text>
+</svg>

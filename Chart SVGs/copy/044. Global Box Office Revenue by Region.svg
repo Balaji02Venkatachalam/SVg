@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 720" preserveAspectRatio="xMidYMid meet">
+
+  <defs>
+   <style type="text/css">
+    .bg { fill: #FFFFFF; }
+    .title { font-family: Arial, sans-serif; font-size: 22px; font-weight: bold; fill: #333333; }
+    .subtitle { font-family: Arial, sans-serif; font-size: 14px; fill: #666666; }
+    .axis-line { stroke: #CCCCCC; stroke-width: 1; fill: none; }
+    .axis-line-bold { stroke: #999999; stroke-width: 1.5; fill: none; }
+    .tick-label { font-family: Arial, sans-serif; font-size: 12px; fill: #666666; text-anchor: middle; }
+    .y-tick-label { font-family: Arial, sans-serif; font-size: 12px; fill: #666666; text-anchor: end; }
+    .bar-label { font-family: Arial, sans-serif; font-size: 11px; fill: #333333; text-anchor: end; }
+    .legend-text { font-family: Arial, sans-serif; font-size: 11px; fill: #333333; }
+    .source-text { font-family: Arial, sans-serif; font-size: 10px; fill: #999999; }
+   </style>
+  </defs>
+  <rect class="bg" x="0" y="0" width="960" height="720" />
+  <text class="title" x="70" y="42">Global Box Office Revenue by Region</text>
+  <text class="subtitle" x="70" y="72">USD billions</text>
+  <line class="axis-line" x1="80" y1="95" x2="920" y2="95" />
+  <text class="y-tick-label" x="72" y="99">30.3</text>
+  <line class="axis-line" x1="80" y1="176" x2="920" y2="176" />
+  <text class="y-tick-label" x="72" y="180">25.2</text>
+  <line class="axis-line" x1="80" y1="257" x2="920" y2="257" />
+  <text class="y-tick-label" x="72" y="261">20.2</text>
+  <line class="axis-line" x1="80" y1="338" x2="920" y2="338" />
+  <text class="y-tick-label" x="72" y="342">15.1</text>
+  <line class="axis-line" x1="80" y1="418" x2="920" y2="418" />
+  <text class="y-tick-label" x="72" y="422">10.1</text>
+  <line class="axis-line" x1="80" y1="499" x2="920" y2="499" />
+  <text class="y-tick-label" x="72" y="503">5.0</text>
+  <line class="axis-line" x1="80" y1="580" x2="920" y2="580" />
+  <text class="y-tick-label" x="72" y="584">0.0</text>
+  <text class="tick-label" x="80" y="602">2015</text>
+  <text class="tick-label" x="164" y="602">2016</text>
+  <text class="tick-label" x="248" y="602">2017</text>
+  <text class="tick-label" x="332" y="602">2018</text>
+  <text class="tick-label" x="416" y="602">2019</text>
+  <text class="tick-label" x="500" y="602">2020</text>
+  <text class="tick-label" x="584" y="602">2021</text>
+  <text class="tick-label" x="668" y="602">2022</text>
+  <text class="tick-label" x="752" y="602">2023</text>
+  <text class="tick-label" x="836" y="602">2024</text>
+  <text class="tick-label" x="920" y="602">2025</text>
+  <line class="axis-line-bold" x1="80" y1="580" x2="920" y2="580" />
+  <line class="axis-line-bold" x1="80" y1="95" x2="80" y2="580" />
+  <polygon points="80,157 164,156 248,127 332,95 416,100 500,454 584,300 668,236 752,169 836,135 920,119 920,210 836,223 752,249 668,305 584,351 500,482 416,180 332,170 248,199 164,223 80,221" fill="#E9C46A" fill-opacity="0.7" stroke="#E9C46A" stroke-width="1" />
+  <polygon points="80,221 164,223 248,199 332,170 416,180 500,482 584,351 668,305 752,249 836,223 920,210 920,282 836,292 752,313 668,366 584,391 500,497 416,252 332,245 248,276 164,292 80,293" fill="#2A9D8F" fill-opacity="0.7" stroke="#2A9D8F" stroke-width="1" />
+  <polygon points="80,293 164,292 248,276 332,245 416,252 500,497 584,391 668,366 752,313 836,292 920,282 920,423 836,428 752,436 668,462 584,508 500,545 416,399 332,390 248,402 164,398 80,402" fill="#E63946" fill-opacity="0.7" stroke="#E63946" stroke-width="1" />
+  <polygon points="80,402 164,398 248,402 332,390 416,399 500,545 584,508 668,462 752,436 836,428 920,423 920,580 836,580 752,580 668,580 584,580 500,580 416,580 332,580 248,580 164,580 80,580" fill="#457B9D" fill-opacity="0.7" stroke="#457B9D" stroke-width="1" />
+  <rect x="80" y="644" width="14" height="14" fill="#457B9D" fill-opacity="0.7" />
+  <text class="legend-text" x="100" y="655">North America</text>
+  <rect x="260" y="644" width="14" height="14" fill="#E63946" fill-opacity="0.7" />
+  <text class="legend-text" x="280" y="655">China</text>
+  <rect x="440" y="644" width="14" height="14" fill="#2A9D8F" fill-opacity="0.7" />
+  <text class="legend-text" x="460" y="655">Europe</text>
+  <rect x="620" y="644" width="14" height="14" fill="#E9C46A" fill-opacity="0.7" />
+  <text class="legend-text" x="640" y="655">Rest of World</text>
+</svg>

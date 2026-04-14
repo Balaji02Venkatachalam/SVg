@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 720" preserveAspectRatio="xMidYMid meet">
+
+  <defs>
+   <style type="text/css">
+    .bg { fill: #FFFFFF; }
+    .title { font-family: Arial, sans-serif; font-size: 22px; font-weight: bold; fill: #333333; }
+    .subtitle { font-family: Arial, sans-serif; font-size: 14px; fill: #666666; }
+    .axis-line { stroke: #CCCCCC; stroke-width: 1; fill: none; }
+    .axis-line-bold { stroke: #999999; stroke-width: 1.5; fill: none; }
+    .tick-label { font-family: Arial, sans-serif; font-size: 12px; fill: #666666; text-anchor: middle; }
+    .y-tick-label { font-family: Arial, sans-serif; font-size: 12px; fill: #666666; text-anchor: end; }
+    .bar-label { font-family: Arial, sans-serif; font-size: 11px; fill: #333333; text-anchor: end; }
+    .legend-text { font-family: Arial, sans-serif; font-size: 11px; fill: #333333; }
+    .source-text { font-family: Arial, sans-serif; font-size: 10px; fill: #999999; }
+   </style>
+  </defs>
+  <rect class="bg" x="0" y="0" width="960" height="720" />
+  <text class="title" x="70" y="42">China Electricity Generation Mix</text>
+  <text class="subtitle" x="70" y="72">Terawatt hours</text>
+  <line class="axis-line" x1="80" y1="95" x2="920" y2="95" />
+  <text class="y-tick-label" x="72" y="99">9190.0</text>
+  <line class="axis-line" x1="80" y1="176" x2="920" y2="176" />
+  <text class="y-tick-label" x="72" y="180">7658.3</text>
+  <line class="axis-line" x1="80" y1="257" x2="920" y2="257" />
+  <text class="y-tick-label" x="72" y="261">6126.7</text>
+  <line class="axis-line" x1="80" y1="338" x2="920" y2="338" />
+  <text class="y-tick-label" x="72" y="342">4595.0</text>
+  <line class="axis-line" x1="80" y1="418" x2="920" y2="418" />
+  <text class="y-tick-label" x="72" y="422">3063.3</text>
+  <line class="axis-line" x1="80" y1="499" x2="920" y2="499" />
+  <text class="y-tick-label" x="72" y="503">1531.7</text>
+  <line class="axis-line" x1="80" y1="580" x2="920" y2="580" />
+  <text class="y-tick-label" x="72" y="584">0.0</text>
+  <text class="tick-label" x="80" y="602">2015</text>
+  <text class="tick-label" x="164" y="602">2016</text>
+  <text class="tick-label" x="248" y="602">2017</text>
+  <text class="tick-label" x="332" y="602">2018</text>
+  <text class="tick-label" x="416" y="602">2019</text>
+  <text class="tick-label" x="500" y="602">2020</text>
+  <text class="tick-label" x="584" y="602">2021</text>
+  <text class="tick-label" x="668" y="602">2022</text>
+  <text class="tick-label" x="752" y="602">2023</text>
+  <text class="tick-label" x="836" y="602">2024</text>
+  <text class="tick-label" x="920" y="602">2025</text>
+  <line class="axis-line-bold" x1="80" y1="580" x2="920" y2="580" />
+  <line class="axis-line-bold" x1="80" y1="95" x2="80" y2="580" />
+  <polygon points="80,290 164,280 248,263 332,238 416,217 500,206 584,172 668,149 752,130 836,112 920,95 920,121 836,137 752,153 668,171 584,194 500,225 416,236 332,253 248,276 164,292 80,299" fill="#F4A261" fill-opacity="0.7" stroke="#F4A261" stroke-width="1" />
+  <polygon points="80,299 164,292 248,276 332,253 416,236 500,225 584,194 668,171 752,153 836,137 920,121 920,237 836,234 752,232 668,234 584,244 500,264 416,269 332,281 248,298 164,311 80,315" fill="#2A9D8F" fill-opacity="0.7" stroke="#2A9D8F" stroke-width="1" />
+  <polygon points="80,315 164,311 248,298 332,281 416,269 500,264 584,244 668,234 752,232 836,234 920,237 920,316 836,311 752,306 668,306 584,315 500,336 416,337 332,346 248,361 164,374 80,374" fill="#457B9D" fill-opacity="0.7" stroke="#457B9D" stroke-width="1" />
+  <polygon points="80,374 164,374 248,361 332,346 416,337 500,336 584,315 668,306 752,306 836,311 920,316 920,580 836,580 752,580 668,580 584,580 500,580 416,580 332,580 248,580 164,580 80,580" fill="#666666" fill-opacity="0.7" stroke="#666666" stroke-width="1" />
+  <rect x="80" y="644" width="14" height="14" fill="#666666" fill-opacity="0.7" />
+  <text class="legend-text" x="100" y="655">Coal</text>
+  <rect x="260" y="644" width="14" height="14" fill="#457B9D" fill-opacity="0.7" />
+  <text class="legend-text" x="280" y="655">Hydro</text>
+  <rect x="440" y="644" width="14" height="14" fill="#2A9D8F" fill-opacity="0.7" />
+  <text class="legend-text" x="460" y="655">Wind & Solar</text>
+  <rect x="620" y="644" width="14" height="14" fill="#F4A261" fill-opacity="0.7" />
+  <text class="legend-text" x="640" y="655">Nuclear</text>
+</svg>

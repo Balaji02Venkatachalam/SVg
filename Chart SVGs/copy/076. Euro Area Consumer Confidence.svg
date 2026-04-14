@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 720" preserveAspectRatio="xMidYMid meet">
+
+  <defs>
+   <style type="text/css">
+    .bg { fill: #FFFFFF; }
+    .title { font-family: Arial, sans-serif; font-size: 22px; font-weight: bold; fill: #333333; }
+    .subtitle { font-family: Arial, sans-serif; font-size: 14px; fill: #666666; }
+    .axis-line { stroke: #CCCCCC; stroke-width: 1; fill: none; }
+    .axis-line-bold { stroke: #999999; stroke-width: 1.5; fill: none; }
+    .tick-label { font-family: Arial, sans-serif; font-size: 12px; fill: #666666; text-anchor: middle; }
+    .y-tick-label { font-family: Arial, sans-serif; font-size: 12px; fill: #666666; text-anchor: end; }
+    .bar-label { font-family: Arial, sans-serif; font-size: 11px; fill: #333333; text-anchor: end; }
+    .legend-text { font-family: Arial, sans-serif; font-size: 11px; fill: #333333; }
+    .source-text { font-family: Arial, sans-serif; font-size: 10px; fill: #999999; }
+   </style>
+  </defs>
+  <rect class="bg" x="0" y="0" width="960" height="720" />
+  <text class="title" x="70" y="42">Euro Area Consumer Confidence</text>
+  <text class="subtitle" x="70" y="72">Index</text>
+  <line class="axis-line" x1="80" y1="95" x2="920" y2="95" />
+  <text class="y-tick-label" x="72" y="99">83.3</text>
+  <line class="axis-line" x1="80" y1="176" x2="920" y2="176" />
+  <text class="y-tick-label" x="72" y="180">68.0</text>
+  <line class="axis-line" x1="80" y1="257" x2="920" y2="257" />
+  <text class="y-tick-label" x="72" y="261">52.7</text>
+  <line class="axis-line" x1="80" y1="338" x2="920" y2="338" />
+  <text class="y-tick-label" x="72" y="342">37.4</text>
+  <line class="axis-line" x1="80" y1="418" x2="920" y2="418" />
+  <text class="y-tick-label" x="72" y="422">22.1</text>
+  <line class="axis-line" x1="80" y1="499" x2="920" y2="499" />
+  <text class="y-tick-label" x="72" y="503">6.8</text>
+  <line class="axis-line" x1="80" y1="580" x2="920" y2="580" />
+  <text class="y-tick-label" x="72" y="584">-8.4</text>
+  <line class="axis-line-bold" x1="80" y1="535" x2="920" y2="535" />
+  <text class="tick-label" x="80" y="602">2018</text>
+  <text class="tick-label" x="195" y="602">2019</text>
+  <text class="tick-label" x="319" y="602">2020</text>
+  <text class="tick-label" x="434" y="602">2021</text>
+  <text class="tick-label" x="557" y="602">2022</text>
+  <text class="tick-label" x="672" y="602">2023</text>
+  <text class="tick-label" x="796" y="602">2024</text>
+  <text class="tick-label" x="920" y="602">2025</text>
+  <line class="axis-line-bold" x1="80" y1="580" x2="920" y2="580" />
+  <line class="axis-line-bold" x1="80" y1="95" x2="80" y2="580" />
+  <polyline points="80,540 89,540 98,540 107,540 115,530 124,540 133,540 142,540 151,509 160,513 168,482 177,475 186,520 195,540 204,520 213,540 221,540 230,540 239,540 248,540 257,540 266,540 275,540 283,526 292,540 301,505 310,536 319,540 328,508 336,540 345,540 354,524 363,533 372,540 381,535 389,540 398,506 407,490 416,410 425,453 434,454 443,482 451,452 460,430 469,410 478,431 487,450 496,504 504,459 513,445 522,452 531,427 540,408 549,382 557,425 566,444 575,438 584,429 593,404 602,430 611,427 619,369 628,350 637,327 646,328 655,308 664,260 672,257 681,225 690,248 699,232 708,208 717,228 725,199 734,217 743,238 752,238 761,187 770,179 779,155 787,174 796,172 805,203 814,218 823,196 832,197 840,159 849,164 858,169 867,135 876,153 885,193 893,158 902,147 911,205 920,203" fill="none" stroke="#A29BFE" stroke-width="2" />
+</svg>

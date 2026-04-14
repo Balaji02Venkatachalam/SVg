@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 720" preserveAspectRatio="xMidYMid meet">
+
+  <defs>
+   <style type="text/css">
+    .bg { fill: #FFFFFF; }
+    .title { font-family: Arial, sans-serif; font-size: 22px; font-weight: bold; fill: #333333; }
+    .subtitle { font-family: Arial, sans-serif; font-size: 14px; fill: #666666; }
+    .axis-line { stroke: #CCCCCC; stroke-width: 1; fill: none; }
+    .axis-line-bold { stroke: #999999; stroke-width: 1.5; fill: none; }
+    .tick-label { font-family: Arial, sans-serif; font-size: 12px; fill: #666666; text-anchor: middle; }
+    .y-tick-label { font-family: Arial, sans-serif; font-size: 12px; fill: #666666; text-anchor: end; }
+    .bar-label { font-family: Arial, sans-serif; font-size: 11px; fill: #333333; text-anchor: end; }
+    .legend-text { font-family: Arial, sans-serif; font-size: 11px; fill: #333333; }
+    .source-text { font-family: Arial, sans-serif; font-size: 10px; fill: #999999; }
+   </style>
+  </defs>
+  <rect class="bg" x="0" y="0" width="960" height="720" />
+  <text class="title" x="70" y="42">Global Shipping Trade Volume</text>
+  <text class="subtitle" x="70" y="72">Billion tonnes loaded</text>
+  <line class="axis-line" x1="80" y1="95" x2="920" y2="95" />
+  <text class="y-tick-label" x="72" y="99">10.7</text>
+  <line class="axis-line" x1="80" y1="176" x2="920" y2="176" />
+  <text class="y-tick-label" x="72" y="180">8.9</text>
+  <line class="axis-line" x1="80" y1="257" x2="920" y2="257" />
+  <text class="y-tick-label" x="72" y="261">7.1</text>
+  <line class="axis-line" x1="80" y1="338" x2="920" y2="338" />
+  <text class="y-tick-label" x="72" y="342">5.4</text>
+  <line class="axis-line" x1="80" y1="418" x2="920" y2="418" />
+  <text class="y-tick-label" x="72" y="422">3.6</text>
+  <line class="axis-line" x1="80" y1="499" x2="920" y2="499" />
+  <text class="y-tick-label" x="72" y="503">1.8</text>
+  <line class="axis-line" x1="80" y1="580" x2="920" y2="580" />
+  <text class="y-tick-label" x="72" y="584">0.0</text>
+  <text class="tick-label" x="80" y="602">2015</text>
+  <text class="tick-label" x="164" y="602">2016</text>
+  <text class="tick-label" x="248" y="602">2017</text>
+  <text class="tick-label" x="332" y="602">2018</text>
+  <text class="tick-label" x="416" y="602">2019</text>
+  <text class="tick-label" x="500" y="602">2020</text>
+  <text class="tick-label" x="584" y="602">2021</text>
+  <text class="tick-label" x="668" y="602">2022</text>
+  <text class="tick-label" x="752" y="602">2023</text>
+  <text class="tick-label" x="836" y="602">2024</text>
+  <text class="tick-label" x="920" y="602">2025</text>
+  <line class="axis-line-bold" x1="80" y1="580" x2="920" y2="580" />
+  <line class="axis-line-bold" x1="80" y1="95" x2="80" y2="580" />
+  <polygon points="80,158 164,145 248,131 332,118 416,122 500,145 584,131 668,118 752,113 836,100 920,95 920,190 836,195 752,204 668,208 584,217 500,226 416,208 332,204 248,213 164,222 80,236" fill="#457B9D" fill-opacity="0.7" stroke="#457B9D" stroke-width="1" />
+  <polygon points="80,236 164,222 248,213 332,204 416,208 500,226 584,217 668,208 752,204 836,195 920,190 920,331 836,335 752,340 668,344 584,349 500,353 416,344 332,344 248,353 164,362 80,367" fill="#E63946" fill-opacity="0.7" stroke="#E63946" stroke-width="1" />
+  <polygon points="80,367 164,362 248,353 332,344 416,344 500,353 584,349 668,344 752,340 836,335 920,331 920,580 836,580 752,580 668,580 584,580 500,580 416,580 332,580 248,580 164,580 80,580" fill="#666666" fill-opacity="0.7" stroke="#666666" stroke-width="1" />
+  <rect x="80" y="644" width="14" height="14" fill="#666666" fill-opacity="0.7" />
+  <text class="legend-text" x="100" y="655">Dry Bulk</text>
+  <rect x="260" y="644" width="14" height="14" fill="#E63946" fill-opacity="0.7" />
+  <text class="legend-text" x="280" y="655">Tanker</text>
+  <rect x="440" y="644" width="14" height="14" fill="#457B9D" fill-opacity="0.7" />
+  <text class="legend-text" x="460" y="655">Container</text>
+</svg>

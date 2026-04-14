@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 720" preserveAspectRatio="xMidYMid meet">
+
+  <defs>
+   <style type="text/css">
+    .bg { fill: #FFFFFF; }
+    .title { font-family: Arial, sans-serif; font-size: 22px; font-weight: bold; fill: #333333; }
+    .subtitle { font-family: Arial, sans-serif; font-size: 14px; fill: #666666; }
+    .axis-line { stroke: #CCCCCC; stroke-width: 1; fill: none; }
+    .axis-line-bold { stroke: #999999; stroke-width: 1.5; fill: none; }
+    .tick-label { font-family: Arial, sans-serif; font-size: 12px; fill: #666666; text-anchor: middle; }
+    .y-tick-label { font-family: Arial, sans-serif; font-size: 12px; fill: #666666; text-anchor: end; }
+    .bar-label { font-family: Arial, sans-serif; font-size: 11px; fill: #333333; text-anchor: end; }
+    .legend-text { font-family: Arial, sans-serif; font-size: 11px; fill: #333333; }
+    .source-text { font-family: Arial, sans-serif; font-size: 10px; fill: #999999; }
+   </style>
+  </defs>
+  <rect class="bg" x="0" y="0" width="960" height="720" />
+  <text class="title" x="70" y="42">World Happiness Score by Region</text>
+  <text class="subtitle" x="70" y="72">Score out of 10</text>
+  <line class="axis-line" x1="80" y1="95" x2="920" y2="95" />
+  <text class="y-tick-label" x="72" y="99">7.4</text>
+  <line class="axis-line" x1="80" y1="176" x2="920" y2="176" />
+  <text class="y-tick-label" x="72" y="180">6.8</text>
+  <line class="axis-line" x1="80" y1="257" x2="920" y2="257" />
+  <text class="y-tick-label" x="72" y="261">6.3</text>
+  <line class="axis-line" x1="80" y1="338" x2="920" y2="338" />
+  <text class="y-tick-label" x="72" y="342">5.7</text>
+  <line class="axis-line" x1="80" y1="418" x2="920" y2="418" />
+  <text class="y-tick-label" x="72" y="422">5.1</text>
+  <line class="axis-line" x1="80" y1="499" x2="920" y2="499" />
+  <text class="y-tick-label" x="72" y="503">4.6</text>
+  <line class="axis-line" x1="80" y1="580" x2="920" y2="580" />
+  <text class="y-tick-label" x="72" y="584">4.0</text>
+  <line class="axis-line" x1="80" y1="580" x2="80" y2="586" />
+  <text class="tick-label" x="80" y="602">2015</text>
+  <line class="axis-line" x1="164" y1="580" x2="164" y2="586" />
+  <text class="tick-label" x="164" y="602">2016</text>
+  <line class="axis-line" x1="248" y1="580" x2="248" y2="586" />
+  <text class="tick-label" x="248" y="602">2017</text>
+  <line class="axis-line" x1="332" y1="580" x2="332" y2="586" />
+  <text class="tick-label" x="332" y="602">2018</text>
+  <line class="axis-line" x1="416" y1="580" x2="416" y2="586" />
+  <text class="tick-label" x="416" y="602">2019</text>
+  <line class="axis-line" x1="500" y1="580" x2="500" y2="586" />
+  <text class="tick-label" x="500" y="602">2020</text>
+  <line class="axis-line" x1="584" y1="580" x2="584" y2="586" />
+  <text class="tick-label" x="584" y="602">2021</text>
+  <line class="axis-line" x1="668" y1="580" x2="668" y2="586" />
+  <text class="tick-label" x="668" y="602">2022</text>
+  <line class="axis-line" x1="752" y1="580" x2="752" y2="586" />
+  <text class="tick-label" x="752" y="602">2023</text>
+  <line class="axis-line" x1="836" y1="580" x2="836" y2="586" />
+  <text class="tick-label" x="836" y="602">2024</text>
+  <line class="axis-line" x1="920" y1="580" x2="920" y2="586" />
+  <text class="tick-label" x="920" y="602">2025</text>
+  <line class="axis-line-bold" x1="80" y1="580" x2="920" y2="580" />
+  <line class="axis-line-bold" x1="80" y1="95" x2="80" y2="580" />
+  <polyline points="80,164 164,164 248,164 332,150 416,150 500,150 584,150 668,164 752,164 836,150 920,150" fill="none" stroke="#457B9D" stroke-width="2.5" />
+  <polyline points="80,135 164,135 248,150 332,150 416,164 500,164 584,164 668,179 752,193 836,193 920,193" fill="none" stroke="#2A9D8F" stroke-width="2.5" />
+  <polyline points="80,323 164,309 248,309 332,309 416,309 500,323 584,309 668,294 752,294 836,280 920,280" fill="none" stroke="#E63946" stroke-width="2.5" />
+  <polyline points="80,540 164,540 248,540 332,525 416,525 500,525 584,511 668,511 752,511 836,511 920,511" fill="none" stroke="#F4A261" stroke-width="2.5" />
+  <line x1="80" y1="650" x2="100" y2="650" stroke="#457B9D" stroke-width="2.5" />
+  <text class="legend-text" x="105" y="654">Western Europe</text>
+  <line x1="260" y1="650" x2="280" y2="650" stroke="#2A9D8F" stroke-width="2.5" />
+  <text class="legend-text" x="285" y="654">North America</text>
+  <line x1="440" y1="650" x2="460" y2="650" stroke="#E63946" stroke-width="2.5" />
+  <text class="legend-text" x="465" y="654">East Asia</text>
+  <line x1="620" y1="650" x2="640" y2="650" stroke="#F4A261" stroke-width="2.5" />
+  <text class="legend-text" x="645" y="654">Sub-Saharan Africa</text>
+</svg>

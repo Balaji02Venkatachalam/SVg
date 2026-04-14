@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 720" preserveAspectRatio="xMidYMid meet">
+
+  <defs>
+   <style type="text/css">
+    .bg { fill: #FFFFFF; }
+    .title { font-family: Arial, sans-serif; font-size: 22px; font-weight: bold; fill: #333333; }
+    .subtitle { font-family: Arial, sans-serif; font-size: 14px; fill: #666666; }
+    .axis-line { stroke: #CCCCCC; stroke-width: 1; fill: none; }
+    .axis-line-bold { stroke: #999999; stroke-width: 1.5; fill: none; }
+    .tick-label { font-family: Arial, sans-serif; font-size: 12px; fill: #666666; text-anchor: middle; }
+    .y-tick-label { font-family: Arial, sans-serif; font-size: 12px; fill: #666666; text-anchor: end; }
+    .bar-label { font-family: Arial, sans-serif; font-size: 11px; fill: #333333; text-anchor: end; }
+    .legend-text { font-family: Arial, sans-serif; font-size: 11px; fill: #333333; }
+    .source-text { font-family: Arial, sans-serif; font-size: 10px; fill: #999999; }
+   </style>
+  </defs>
+  <rect class="bg" x="0" y="0" width="960" height="720" />
+  <text class="title" x="70" y="42">Global Energy Consumption by Source</text>
+  <text class="subtitle" x="70" y="72">Exajoules</text>
+  <line class="axis-line" x1="80" y1="95" x2="920" y2="95" />
+  <text class="y-tick-label" x="72" y="99">593.0</text>
+  <line class="axis-line" x1="80" y1="176" x2="920" y2="176" />
+  <text class="y-tick-label" x="72" y="180">494.2</text>
+  <line class="axis-line" x1="80" y1="257" x2="920" y2="257" />
+  <text class="y-tick-label" x="72" y="261">395.3</text>
+  <line class="axis-line" x1="80" y1="338" x2="920" y2="338" />
+  <text class="y-tick-label" x="72" y="342">296.5</text>
+  <line class="axis-line" x1="80" y1="418" x2="920" y2="418" />
+  <text class="y-tick-label" x="72" y="422">197.7</text>
+  <line class="axis-line" x1="80" y1="499" x2="920" y2="499" />
+  <text class="y-tick-label" x="72" y="503">98.8</text>
+  <line class="axis-line" x1="80" y1="580" x2="920" y2="580" />
+  <text class="y-tick-label" x="72" y="584">0.0</text>
+  <text class="tick-label" x="80" y="602">2010</text>
+  <text class="tick-label" x="192" y="602">2012</text>
+  <text class="tick-label" x="304" y="602">2014</text>
+  <text class="tick-label" x="416" y="602">2016</text>
+  <text class="tick-label" x="528" y="602">2018</text>
+  <text class="tick-label" x="640" y="602">2020</text>
+  <text class="tick-label" x="752" y="602">2022</text>
+  <text class="tick-label" x="864" y="602">2024</text>
+  <line class="axis-line-bold" x1="80" y1="580" x2="920" y2="580" />
+  <line class="axis-line-bold" x1="80" y1="95" x2="80" y2="580" />
+  <polygon points="80,207 136,196 192,191 248,183 304,175 360,170 416,166 472,156 528,144 584,140 640,156 696,131 752,119 808,112 864,104 920,95 920,173 864,174 808,174 752,174 696,180 640,201 584,183 528,183 472,192 416,198 360,199 304,201 248,205 192,211 136,214 80,223" fill="#2A9D8F" fill-opacity="0.7" stroke="#2A9D8F" stroke-width="1" />
+  <polygon points="80,223 136,214 192,211 248,205 304,201 360,199 416,198 472,192 528,183 584,183 640,201 696,180 752,174 808,174 864,174 920,173 920,298 864,300 808,304 752,306 696,310 640,325 584,311 528,312 472,317 416,322 360,326 304,331 248,334 192,338 136,341 80,348" fill="#666666" fill-opacity="0.7" stroke="#666666" stroke-width="1" />
+  <polygon points="80,348 136,341 192,338 248,334 304,331 360,326 416,322 472,317 528,312 584,311 640,325 696,310 752,306 808,304 864,300 920,298 920,422 864,423 808,425 752,426 696,429 640,437 584,426 528,424 472,425 416,428 360,430 304,432 248,434 192,436 136,438 80,441" fill="#457B9D" fill-opacity="0.7" stroke="#457B9D" stroke-width="1" />
+  <polygon points="80,441 136,438 192,436 248,434 304,432 360,430 416,428 472,425 528,424 584,426 640,437 696,429 752,426 808,425 864,423 920,422 920,580 864,580 808,580 752,580 696,580 640,580 584,580 528,580 472,580 416,580 360,580 304,580 248,580 192,580 136,580 80,580" fill="#E63946" fill-opacity="0.7" stroke="#E63946" stroke-width="1" />
+  <rect x="80" y="644" width="14" height="14" fill="#E63946" fill-opacity="0.7" />
+  <text class="legend-text" x="100" y="655">Oil</text>
+  <rect x="260" y="644" width="14" height="14" fill="#457B9D" fill-opacity="0.7" />
+  <text class="legend-text" x="280" y="655">Gas</text>
+  <rect x="440" y="644" width="14" height="14" fill="#666666" fill-opacity="0.7" />
+  <text class="legend-text" x="460" y="655">Coal</text>
+  <rect x="620" y="644" width="14" height="14" fill="#2A9D8F" fill-opacity="0.7" />
+  <text class="legend-text" x="640" y="655">Renewables</text>
+</svg>
