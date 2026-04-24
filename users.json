@@ -1,9 +1,4 @@
 {
-  "ananya.pendlikal@lseg.com": {
-    "user_id": "a435cf4f",
-    "email": "ananya.pendlikal@lseg.com",
-    "password_hash": "$2b$12$wuk816RPAK.mVno5kPbYXeIOmf0o/TYWNt20.7uDtLwhrDfErDVmi"
-  },
   "test@gmail.com": {
     "user_id": "62dabaae",
     "email": "test@gmail.com",
@@ -23,5 +18,20 @@
     "user_id": "52e25b81",
     "email": "codez@gmail.com",
     "password_hash": "$2b$12$xAsMMLRENVD7LvbZPYMa6O85eGc9pZmdgH2vUUjuxcGht1WlowU1C"
+  },
+  "balajivenkatachalam02@gmail.com": {
+    "user_id": "30aa142a",
+    "email": "balajivenkatachalam02@gmail.com",
+    "password_hash": "$2b$12$BQYxmoKd.QqC25O4whK7buqrxdeY8ThaxF/VoO27jC4/oeyhhAjr6"
+  },
+  "best@gmail.com": {
+    "user_id": "c2096166",
+    "email": "best@gmail.com",
+    "password_hash": "$2b$12$Tvih6WF5HPIglsfDaItphenVO2Z9A8KcK17Uu7qq3gNcvMbq9zKMy"
+  },
+  "balaji@gmail.com": {
+    "user_id": "7e3a3fb2",
+    "email": "balaji@gmail.com",
+    "password_hash": "$2b$12$.Cq/Gq/CnfrRFuX2iPZ8SOMjlL6CwzZ8KYLjirAaQ3BQIOu84IWbK"
   }
 }

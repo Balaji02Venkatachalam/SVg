@@ -1,7 +1,7 @@
 """
 LLM Narrator — generates analyst-style commentary from structured insights.
 
-Uses the LSEG Azure OpenAI GPT-5 API with strict guardrails:
+Uses the Google Gemini API with strict guardrails:
 - Only references data provided in the insights
 - No hallucination of events, dates, or policy actions
 - Supports tone control (neutral, bullish, bearish, cautious)
@@ -11,26 +11,35 @@ from __future__ import annotations
 import hashlib
 import json
 import logging
+import os
 import httpx
 
 from ..models.schemas import ChartInsight, Narrative
 
 logger = logging.getLogger(__name__)
 
-# ─── LSEG Azure OpenAI Configuration ─────────────────────────────────────────
+# ─── Google Gemini Configuration ──────────────────────────────────────────────
 
-LLM_ENDPOINT = (
-    "https://a1a-52048-dev-cog-rioai-eus2-1.openai.azure.com"
-    "/openai/deployments/gpt-5_2025-08-07/chat/completions"
-    "?api-version=2025-01-01-preview"
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.0-flash")
+GEMINI_ENDPOINT = (
+    f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}"
+    f":generateContent?key={GEMINI_API_KEY}"
 )
-LLM_API_KEY = "f57572c4e8db4f8a8ef2878cabe5fce2"
 
-# Shared async HTTP client — one TCP/TLS connection pool reused across all requests (~100-300ms saved per call)
+def _get_gemini_endpoint() -> str:
+    """Build endpoint URL using current env vars (allows runtime changes)."""
+    api_key = os.getenv("GEMINI_API_KEY", GEMINI_API_KEY)
+    model = os.getenv("GEMINI_MODEL", GEMINI_MODEL)
+    return (
+        f"https://generativelanguage.googleapis.com/v1beta/models/{model}"
+        f":generateContent?key={api_key}"
+    )
+
+# Shared async HTTP client
 _http_client = httpx.AsyncClient(timeout=120.0)
 
-# In-memory narrative cache: insight hash → Narrative
-# Same chart re-uploaded (or /api/narrative called again) gets instant response.
+# In-memory narrative cache
 _narrative_cache: dict[str, Narrative] = {}
 
 
@@ -113,58 +122,58 @@ async def generate_narrative(
     focus_series: str = "",
 ) -> Narrative:
     """
-    Call LSEG Azure OpenAI GPT-5 to generate narrative from structured insights.
+    Call Google Gemini to generate narrative from structured insights.
     Returns cached result instantly if the same insight+tone was seen before.
     """
     user_prompt = _build_user_prompt(insight, tone, focus_series)
 
-    # Cache lookup — same chart re-uploaded or /api/narrative called again = zero LLM cost
+    # Cache lookup
     cache_key = hashlib.md5(user_prompt.encode()).hexdigest()
     if cache_key in _narrative_cache:
         logger.info("Narrative cache hit")
         return _narrative_cache[cache_key]
 
-    payload = {
-        "messages": [
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": user_prompt},
-        ],
-        # 1500 tokens: enough for summary(2-3 sent) + detailed(4-6 sent) + 3 takeaways
-        # with headroom, while avoiding the 10001 compute-reservation penalty.
-        "max_completion_tokens": 1500,
-    }
+    full_prompt = SYSTEM_PROMPT + "\n\n" + user_prompt
 
-    headers = {
-        "api-key": LLM_API_KEY,
-        "Content-Type": "application/json",
+    payload = {
+        "contents": [
+            {"parts": [{"text": full_prompt}]}
+        ],
+        "generationConfig": {
+            "maxOutputTokens": 1500,
+            "temperature": 0.7,
+        },
     }
 
     try:
-        response = await _http_client.post(LLM_ENDPOINT, json=payload, headers=headers)
+        endpoint = _get_gemini_endpoint()
+        response = await _http_client.post(
+            endpoint,
+            json=payload,
+            headers={"Content-Type": "application/json"},
+        )
         response.raise_for_status()
 
         result = response.json()
-        choice = result["choices"][0]
-        content = choice["message"].get("content") or ""
-        finish_reason = choice.get("finish_reason", "")
+        candidates = result.get("candidates", [])
+        if not candidates:
+            logger.warning("Gemini returned no candidates, using fallback")
+            return _fallback_narrative(insight, tone)
 
-        if finish_reason == "content_filter":
-            logger.warning("LLM response filtered by content policy, using fallback")
+        content = candidates[0].get("content", {}).get("parts", [{}])[0].get("text", "")
+
+        if not content.strip():
+            logger.warning("Gemini returned empty content, using fallback")
             return _fallback_narrative(insight, tone)
 
         # Parse JSON response — handle potential markdown code blocks
         content = content.strip()
-        if not content:
-            logger.warning(f"LLM returned empty content (finish_reason={finish_reason}), using fallback")
-            return _fallback_narrative(insight, tone)
-
         if content.startswith("```"):
-            content = content.split("\n", 1)[1]  # remove first line
+            content = content.split("\n", 1)[1]
             if content.endswith("```"):
                 content = content[:-3]
             content = content.strip()
 
-        # Try to extract JSON from within the response if it has surrounding text
         if not content.startswith("{"):
             json_start = content.find("{")
             json_end = content.rfind("}") + 1
@@ -174,23 +183,22 @@ async def generate_narrative(
         narrative_data = json.loads(content)
 
         narrative = Narrative(
-                summary=narrative_data.get("summary", ""),
-                detailed=narrative_data.get("detailed", ""),
-                key_takeaways=narrative_data.get("key_takeaways", []),
-                tone=narrative_data.get("tone", tone),
-            )
+            summary=narrative_data.get("summary", ""),
+            detailed=narrative_data.get("detailed", ""),
+            key_takeaways=narrative_data.get("key_takeaways", []),
+            tone=narrative_data.get("tone", tone),
+        )
         _narrative_cache[cache_key] = narrative
         return narrative
 
     except httpx.HTTPStatusError as e:
-        logger.error(f"LLM API error: {e.response.status_code} - {e.response.text}")
+        logger.error(f"Gemini API error: {e.response.status_code} - {e.response.text}")
         return _fallback_narrative(insight, tone)
     except json.JSONDecodeError as e:
-        logger.error(f"Failed to parse LLM response as JSON: {e}")
-        logger.error(f"Raw LLM content (first 500 chars): {content[:500] if content else '(empty)'}")
+        logger.error(f"Failed to parse Gemini response as JSON: {e}")
         return _fallback_narrative(insight, tone)
     except Exception as e:
-        logger.error(f"LLM call failed: {e}")
+        logger.error(f"Gemini call failed: {e}")
         return _fallback_narrative(insight, tone)
 
 
@@ -210,41 +218,20 @@ async def stream_narrative(
     focus_series: str = "",
 ):
     """
-    Async generator that streams narrative tokens from the LLM streaming API.
-    Yields raw text chunks as they arrive — wire directly to an SSE endpoint.
-    Reuses the shared _http_client connection pool (no per-call TLS handshake).
+    Async generator that yields narrative text from Gemini.
+    Since Gemini REST API does not support true streaming easily,
+    we generate the full response and yield it in chunks.
     """
-    user_prompt = _build_user_prompt(insight, tone, focus_series)
-
-    payload = {
-        "messages": [
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": user_prompt},
-        ],
-        "max_completion_tokens": 1500,
-    }
-
-    headers = {
-        "api-key": LLM_API_KEY,
-        "Content-Type": "application/json",
-    }
-
     try:
-        async with _http_client.stream("POST", LLM_ENDPOINT, json=payload, headers=headers) as response:
-            response.raise_for_status()
-            async for line in response.aiter_lines():
-                if not line.startswith("data: "):
-                    continue
-                data = line[6:]
-                if data.strip() == "[DONE]":
-                    break
-                try:
-                    chunk = json.loads(data)
-                    delta = chunk["choices"][0]["delta"].get("content", "")
-                    if delta:
-                        yield delta
-                except (json.JSONDecodeError, KeyError, IndexError):
-                    continue
+        narrative = await generate_narrative(insight, tone, focus_series)
+        # Yield the full JSON as a single chunk
+        result = json.dumps({
+            "summary": narrative.summary,
+            "detailed": narrative.detailed,
+            "key_takeaways": narrative.key_takeaways,
+            "tone": narrative.tone,
+        })
+        yield result
     except Exception as e:
         logger.error(f"stream_narrative failed: {e}")
         yield "[Streaming error — narrative unavailable]"
@@ -296,7 +283,6 @@ async def generate_comparison_narrative(
 ) -> Narrative:
     """Generate a comparative narrative across multiple charts."""
 
-    # Build comparison data
     charts_summary = []
     for ins in insights:
         chart_info = {
@@ -322,29 +308,41 @@ CHARTS:
 
 Generate a comparative analyst commentary as JSON following the system instructions."""
 
-    payload = {
-        "messages": [
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": user_prompt},
-        ],
-        "max_completion_tokens": 1500,
-    }
+    full_prompt = SYSTEM_PROMPT + "\n\n" + user_prompt
 
-    headers = {
-        "api-key": LLM_API_KEY,
-        "Content-Type": "application/json",
+    payload = {
+        "contents": [
+            {"parts": [{"text": full_prompt}]}
+        ],
+        "generationConfig": {
+            "maxOutputTokens": 1500,
+            "temperature": 0.7,
+        },
     }
 
     try:
-        response = await _http_client.post(LLM_ENDPOINT, json=payload, headers=headers)
+        endpoint = _get_gemini_endpoint()
+        response = await _http_client.post(
+            endpoint,
+            json=payload,
+            headers={"Content-Type": "application/json"},
+        )
         response.raise_for_status()
         result = response.json()
-        content = result["choices"][0]["message"]["content"].strip()
+        candidates = result.get("candidates", [])
+        if not candidates:
+            raise ValueError("No candidates returned")
+        content = candidates[0].get("content", {}).get("parts", [{}])[0].get("text", "").strip()
         if content.startswith("```"):
             content = content.split("\n", 1)[1]
             if content.endswith("```"):
                 content = content[:-3]
             content = content.strip()
+        if not content.startswith("{"):
+            json_start = content.find("{")
+            json_end = content.rfind("}") + 1
+            if json_start != -1 and json_end > json_start:
+                content = content[json_start:json_end]
         data = json.loads(content)
         return Narrative(
             summary=data.get("summary", ""),
@@ -353,7 +351,7 @@ Generate a comparative analyst commentary as JSON following the system instructi
             tone=data.get("tone", tone),
         )
     except Exception as e:
-        logger.error(f"Comparison LLM call failed: {e}")
+        logger.error(f"Comparison Gemini call failed: {e}")
         return Narrative(
             summary="Comparison analysis unavailable.",
             detailed="Unable to generate comparison at this time.",

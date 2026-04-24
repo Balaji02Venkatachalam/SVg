@@ -9,7 +9,7 @@ Routes:
   POST /api/compare         — Multi-chart comparison
   GET  /api/charts          — List all analyzed charts
   GET  /api/charts/{id}     — Get specific chart analysis
-  GET  /api/demo            — Load all 7 demo charts
+  GET  /api/demo            — Load demo charts
   GET  /api/health          — Health check
 """
 
@@ -81,8 +81,9 @@ chart_store: dict[str, ChartAnalysisResult] = {}
 # In-memory store for raw SVG content
 svg_store: dict[str, bytes] = {}
 
-# Path to demo SVG files
+# Path to demo SVG files (includes root Chart SVGs and copy subfolder)
 DEMO_SVG_DIR = Path(__file__).parent.parent.parent / "Chart SVGs"
+DEMO_SVG_COPY_DIR = DEMO_SVG_DIR / "copy"
 STATIC_DIR = Path(__file__).parent / "static"
 
 
@@ -307,7 +308,7 @@ async def chat_with_data(request: ChatRequest, user: dict = Depends(require_auth
     }
 
     import json as _json
-    from .services.llm_narrator import LLM_ENDPOINT, LLM_API_KEY, _http_client
+    from .services.llm_narrator import _get_gemini_endpoint, _http_client
 
     system_msg = (
         "You are an expert financial data analyst assistant. "
@@ -318,28 +319,39 @@ async def chat_with_data(request: ChatRequest, user: dict = Depends(require_auth
         f"CHART DATA:\n```json\n{_json.dumps(chart_context, indent=2)}\n```"
     )
 
-    messages = [{"role": "system", "content": system_msg}]
+    # Build conversation history for Gemini
+    conversation_parts = [{"text": system_msg}]
     for msg in request.history[-10:]:
-        messages.append({"role": msg.role, "content": msg.content})
-    messages.append({"role": "user", "content": request.question})
+        conversation_parts.append({"text": f"{msg.role}: {msg.content}"})
+    conversation_parts.append({"text": f"user: {request.question}"})
 
     payload = {
-        "messages": messages,
-        "max_completion_tokens": 4000,
-    }
-    headers = {
-        "api-key": LLM_API_KEY,
-        "Content-Type": "application/json",
+        "contents": [
+            {"parts": conversation_parts}
+        ],
+        "generationConfig": {
+            "maxOutputTokens": 4000,
+            "temperature": 0.7,
+        },
     }
 
     try:
-        response = await _http_client.post(LLM_ENDPOINT, json=payload, headers=headers)
+        endpoint = _get_gemini_endpoint()
+        response = await _http_client.post(
+            endpoint,
+            json=payload,
+            headers={"Content-Type": "application/json"},
+        )
         response.raise_for_status()
         data = response.json()
-        answer = data["choices"][0]["message"]["content"]
+        candidates = data.get("candidates", [])
+        if candidates:
+            answer = candidates[0].get("content", {}).get("parts", [{}])[0].get("text", "")
+        else:
+            answer = "No response from AI."
         return {"answer": answer}
     except Exception as e:
-        logger.error(f"Chat LLM call failed: {e}")
+        logger.error(f"Chat Gemini call failed: {e}")
         raise HTTPException(500, "Failed to get answer from AI. Please try again.")
 
 
@@ -454,9 +466,9 @@ async def predict_series(request: dict, user: dict = Depends(require_auth)):
 
 @app.post("/api/range-analysis")
 async def range_analysis(request: RangeAnalysisRequest, user: dict = Depends(require_auth)):
-    """Return news summary for a selected time range via LLM + news search."""
+    """Return news summary for a selected time range via Gemini + news search."""
     import httpx
-    from .services.llm_narrator import LLM_ENDPOINT, LLM_API_KEY
+    from .services.llm_narrator import _get_gemini_endpoint
 
     logger.info(f"Range analysis requested: {request.from_label} → {request.to_label} "
                 f"on '{request.chart_title}'")
@@ -474,27 +486,31 @@ async def range_analysis(request: RangeAnalysisRequest, user: dict = Depends(req
         summaries.append(f"{s.name}: {direction} from {first_val:.1f} to {last_val:.1f} ({pct:+.1f}%)")
 
     data_summary = "; ".join(summaries)
-    headers = {"api-key": LLM_API_KEY, "Content-Type": "application/json"}
+    gemini_endpoint = _get_gemini_endpoint()
 
     # Resolve abbreviated axis labels to real dates
     try:
         async with httpx.AsyncClient(timeout=120.0) as client:
             resolve_payload = {
-                "messages": [{"role": "user", "content": (
+                "contents": [{"parts": [{"text": (
                     f"A financial chart titled '{request.chart_title}' has x-axis labels "
                     f"'{request.from_label}' and '{request.to_label}'. "
                     f"On financial charts, 'Apr 13' means April 2013, '21' means 2021, "
                     f"'Oct 5' means October 2005. "
                     f"What are the actual start and end dates? "
                     f"Reply ONLY with: START: [date], END: [date]"
-                )}],
-                "max_completion_tokens": 8000,
+                )}]},
+                ],
+                "generationConfig": {"maxOutputTokens": 200},
             }
-            r1 = await client.post(LLM_ENDPOINT, json=resolve_payload, headers=headers)
+            r1 = await client.post(gemini_endpoint, json=resolve_payload,
+                                   headers={"Content-Type": "application/json"})
             dates_text = ""
             if r1.status_code == 200:
                 d1 = r1.json()
-                dates_text = (d1.get("choices", [{}])[0].get("message", {}).get("content") or "").strip()
+                candidates = d1.get("candidates", [])
+                if candidates:
+                    dates_text = (candidates[0].get("content", {}).get("parts", [{}])[0].get("text", "")).strip()
                 logger.info(f"Date resolution: [{dates_text}]")
 
             if not dates_text or len(dates_text) < 5:
@@ -523,14 +539,14 @@ async def range_analysis(request: RangeAnalysisRequest, user: dict = Depends(req
             except Exception as ne:
                 logger.warning(f"Range news search failed: {ne}")
 
-            # LLM: summarize news for the period
+            # Gemini: summarize news for the period
             news_context = ""
             if news_events:
                 headlines = "; ".join([e["headline"] for e in news_events[:6]])
                 news_context = f"\nRecent news headlines for this period: {headlines}\n"
 
             summary_payload = {
-                "messages": [{"role": "user", "content": (
+                "contents": [{"parts": [{"text": (
                     f"Chart: '{request.chart_title}' ({request.chart_subtitle}).\n"
                     f"Period: {dates_text}.\n"
                     f"Data: {data_summary}.\n"
@@ -538,14 +554,18 @@ async def range_analysis(request: RangeAnalysisRequest, user: dict = Depends(req
                     f"Give a brief 2-3 sentence news summary of what happened during this "
                     f"specific time period that is relevant to this data. Focus on key events, "
                     f"policy changes, or market developments. Be specific with dates."
-                )}],
-                "max_completion_tokens": 16000,
+                )}]},
+                ],
+                "generationConfig": {"maxOutputTokens": 2000},
             }
-            r2 = await client.post(LLM_ENDPOINT, json=summary_payload, headers=headers)
+            r2 = await client.post(gemini_endpoint, json=summary_payload,
+                                   headers={"Content-Type": "application/json"})
             news_summary = ""
             if r2.status_code == 200:
                 d2 = r2.json()
-                news_summary = (d2.get("choices", [{}])[0].get("message", {}).get("content") or "").strip()
+                candidates = d2.get("candidates", [])
+                if candidates:
+                    news_summary = (candidates[0].get("content", {}).get("parts", [{}])[0].get("text", "")).strip()
                 logger.info(f"News summary: [{news_summary[:300]}]")
 
             if not news_summary or len(news_summary) < 10:
@@ -563,7 +583,7 @@ async def range_analysis(request: RangeAnalysisRequest, user: dict = Depends(req
 
 @app.get("/api/demo")
 async def load_demo(user: dict = Depends(require_auth)):
-    """Return demo charts. Served from cache after first load (pre-warmed on startup)."""
+    """Return demo charts. Served from cache after first load."""
     if not DEMO_SVG_DIR.exists():
         raise HTTPException(404, "Demo SVG directory not found")
 
@@ -582,7 +602,11 @@ async def load_demo(user: dict = Depends(require_auth)):
                 })
         return {"charts": results, "total": len(results), "cached": True}
 
+    # Collect SVGs from both root dir and copy subfolder
     svg_files = sorted(DEMO_SVG_DIR.glob("*.svg"))
+    if DEMO_SVG_COPY_DIR.exists():
+        svg_files.extend(sorted(DEMO_SVG_COPY_DIR.glob("*.svg")))
+
     if not svg_files:
         raise HTTPException(404, "No SVG files found in demo directory")
 

@@ -1,20 +1,23 @@
 """
 News Search — fetches relevant news headlines for chart breakpoints.
 
-Uses DuckDuckGo HTML search (no API key required) to find
-real-world events that may explain trend changes.
+Uses Google News RSS feed (no API key required, publicly accessible)
+to find real-world events that may explain trend changes.
+Falls back to Bing News search if RSS fails.
 """
 
 from __future__ import annotations
 import re
 import logging
 from dataclasses import dataclass
+from urllib.parse import quote_plus
+import xml.etree.ElementTree as ET
 
 import httpx
 
 logger = logging.getLogger(__name__)
 
-SEARCH_URL = "https://html.duckduckgo.com/html/"
+GOOGLE_NEWS_RSS = "https://news.google.com/rss/search?q={query}&hl=en-US&gl=US&ceid=US:en"
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
 
 
@@ -28,66 +31,97 @@ class NewsResult:
 
 async def search_news(query: str, max_results: int = 5) -> list[NewsResult]:
     """
-    Search DuckDuckGo HTML for news headlines matching a query.
+    Search Google News RSS for headlines matching a query.
     Returns a list of NewsResult with title, snippet, url.
     """
     results = []
     try:
+        url = GOOGLE_NEWS_RSS.format(query=quote_plus(query))
         async with httpx.AsyncClient(timeout=15.0, follow_redirects=True) as client:
-            resp = await client.post(
-                SEARCH_URL,
-                data={"q": query, "b": ""},
+            resp = await client.get(
+                url,
                 headers={"User-Agent": USER_AGENT},
             )
             resp.raise_for_status()
-            html = resp.text
+            xml_text = resp.text
 
-            # Parse results from DuckDuckGo HTML response
-            title_pattern = re.compile(
-                r'<a[^>]*class="result__a"[^>]*href="([^"]*)"[^>]*>(.*?)</a>',
-                re.DOTALL,
-            )
-            snippet_pattern = re.compile(
-                r'<a[^>]*class="result__snippet"[^>]*>(.*?)</a>',
-                re.DOTALL,
-            )
+            # Parse RSS XML
+            root = ET.fromstring(xml_text)
+            channel = root.find("channel")
+            if channel is None:
+                return results
 
-            titles = title_pattern.findall(html)
-            snippets = snippet_pattern.findall(html)
+            items = channel.findall("item")
+            for item in items[:max_results]:
+                title_el = item.find("title")
+                link_el = item.find("link")
+                pub_date_el = item.find("pubDate")
+                desc_el = item.find("description")
 
-            for i in range(min(len(titles), len(snippets), max_results)):
-                url = titles[i][0]
-                # DuckDuckGo wraps URLs; extract the real one
-                real_url_match = re.search(r'uddg=([^&]+)', url)
-                if real_url_match:
-                    from urllib.parse import unquote
-                    url = unquote(real_url_match.group(1))
-
-                title_text = _strip_html(titles[i][1]).strip()
-                snippet_text = _strip_html(snippets[i]).strip()
-
-                # Try to extract a date hint from the snippet
-                date_hint = ""
-                date_match = re.search(
-                    r'(\b(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\w*\.?\s+\d{1,2},?\s+\d{4}\b'
-                    r'|\b\d{4}[-/]\d{2}[-/]\d{2}\b'
-                    r'|\b\d{1,2}\s+(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\w*\.?\s+\d{4}\b)',
-                    snippet_text,
-                    re.IGNORECASE,
-                )
-                if date_match:
-                    date_hint = date_match.group(0)
+                title_text = (title_el.text or "").strip() if title_el is not None else ""
+                link_text = (link_el.text or "").strip() if link_el is not None else ""
+                pub_date = (pub_date_el.text or "").strip() if pub_date_el is not None else ""
+                snippet_text = ""
+                if desc_el is not None and desc_el.text:
+                    snippet_text = _strip_html(desc_el.text)[:300]
 
                 if title_text:
                     results.append(NewsResult(
                         title=title_text,
-                        snippet=snippet_text[:300],
-                        url=url,
-                        date_hint=date_hint,
+                        snippet=snippet_text,
+                        url=link_text,
+                        date_hint=pub_date,
                     ))
 
     except Exception as e:
-        logger.warning(f"News search failed for '{query}': {e}")
+        logger.warning(f"Google News RSS failed for '{query}': {e}")
+        # Fallback: try Bing News search
+        results = await _fallback_bing_news(query, max_results)
+
+    return results
+
+
+async def _fallback_bing_news(query: str, max_results: int = 5) -> list[NewsResult]:
+    """Fallback news search using Bing News HTML scraping."""
+    results = []
+    try:
+        search_url = f"https://www.bing.com/news/search?q={quote_plus(query)}&format=rss"
+        async with httpx.AsyncClient(timeout=15.0, follow_redirects=True) as client:
+            resp = await client.get(
+                search_url,
+                headers={"User-Agent": USER_AGENT},
+            )
+            resp.raise_for_status()
+            xml_text = resp.text
+
+            root = ET.fromstring(xml_text)
+            channel = root.find("channel")
+            if channel is None:
+                return results
+
+            items = channel.findall("item")
+            for item in items[:max_results]:
+                title_el = item.find("title")
+                link_el = item.find("link")
+                pub_date_el = item.find("pubDate")
+                desc_el = item.find("description")
+
+                title_text = (title_el.text or "").strip() if title_el is not None else ""
+                link_text = (link_el.text or "").strip() if link_el is not None else ""
+                pub_date = (pub_date_el.text or "").strip() if pub_date_el is not None else ""
+                snippet_text = ""
+                if desc_el is not None and desc_el.text:
+                    snippet_text = _strip_html(desc_el.text)[:300]
+
+                if title_text:
+                    results.append(NewsResult(
+                        title=title_text,
+                        snippet=snippet_text,
+                        url=link_text,
+                        date_hint=pub_date,
+                    ))
+    except Exception as e:
+        logger.warning(f"Bing News RSS fallback also failed for '{query}': {e}")
 
     return results
 

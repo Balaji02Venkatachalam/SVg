@@ -1,8 +1,13 @@
 """
-SVG Parser for LSEG Datastream/Fathom Consulting charts.
+SVG Parser — supports multiple SVG formats.
 
 Extracts polylines, polygons, rects, axis labels, legend entries,
-and metadata from the consistent LSEG SVG structure.
+and metadata from SVG chart files.
+
+Supports:
+  - Format A (legacy): clip-path groups, .s0/.s4/.s5 CSS classes, rotate(360) transforms
+  - Format B (generated): .title/.subtitle/.y-tick-label/.tick-label CSS classes,
+    flat structure with inline stroke attributes
 """
 
 from __future__ import annotations
@@ -23,48 +28,356 @@ SVG_NS = "http://www.w3.org/2000/svg"
 NSMAP = {"svg": SVG_NS}
 
 
+def _detect_svg_format(svg_content: bytes, tree: etree._Element) -> str:
+    """Detect whether this is Format A (legacy) or Format B (generated)."""
+    raw_str = svg_content.decode("utf-8", errors="replace")
+
+    # Format B has .title and .y-tick-label classes in CSS
+    if '.title' in raw_str and '.y-tick-label' in raw_str:
+        return "B"
+
+    # Format A has .s4 class (title) and clip-path groups
+    if '.s4' in raw_str or 'clip-path:url(#c0)' in raw_str:
+        return "A"
+
+    # Fallback: check for rotate(360) transforms (Format A) vs class="title" (Format B)
+    for t in tree.findall(f".//{{{SVG_NS}}}text"):
+        if t.get("class") == "title":
+            return "B"
+        transform = t.get("transform", "")
+        if "rotate(360" in transform:
+            return "A"
+
+    return "B"  # default to Format B
+
+
 def parse_svg(svg_content: str | bytes) -> ChartData:
     """
     Main entry: parse raw SVG content into structured ChartData.
+    Auto-detects the SVG format and dispatches to the right parser.
     """
     if isinstance(svg_content, str):
         svg_content = svg_content.encode("utf-8")
 
     tree = etree.fromstring(svg_content)
-    chart = ChartData()
+    fmt = _detect_svg_format(svg_content, tree)
 
-    # 1. Extract metadata from trailing HTML comment
-    chart.metadata = _extract_metadata(svg_content, tree)
-
-    # 2. Extract CSS styles (needed for color mapping)
-    styles = _extract_styles(svg_content)
-
-    # 3. Extract axis information
-    chart.y_axis = _extract_y_axis(tree)
-    chart.x_axis = _extract_x_axis(tree)
-
-    # 4. Extract plot area from clip-path
-    chart.plot_area = _extract_plot_area(tree)
-
-    # 5. Detect chart type
-    chart.metadata.chart_type = _detect_chart_type(tree, chart.metadata, styles)
-
-    # 6. Extract data series
-    chart.series = _extract_series(tree, styles)
-
-    # 7. Extract legend names and map to series
-    legend_entries = _extract_legend(tree, styles)
-    _map_legend_to_series(chart.series, legend_entries, styles)
-
-    # 8. Calculate confidence score
-    chart.confidence = _calculate_confidence(chart)
+    if fmt == "B":
+        chart = _parse_format_b(svg_content, tree)
+    else:
+        chart = _parse_format_a(svg_content, tree)
 
     logger.info(
-        f"Parsed chart: '{chart.metadata.title}' | "
+        f"Parsed chart (format {fmt}): '{chart.metadata.title}' | "
         f"Type: {chart.metadata.chart_type} | "
         f"Series: {len(chart.series)} | "
         f"Confidence: {chart.confidence:.2f}"
     )
+
+    return chart
+
+
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║  Format B Parser — generated SVGs with .title/.subtitle/.tick-label etc.   ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+
+def _parse_format_b(svg_content: bytes, tree: etree._Element) -> ChartData:
+    """Parse Format B SVGs (generated charts with CSS class names)."""
+    chart = ChartData()
+
+    # 1. Metadata
+    chart.metadata = _extract_metadata_b(tree)
+
+    # 2. Axis info
+    chart.y_axis = _extract_y_axis_b(tree)
+    chart.x_axis = _extract_x_axis_b(tree)
+
+    # 3. Plot area from axis bounds
+    chart.plot_area = _extract_plot_area_b(tree, chart.y_axis, chart.x_axis)
+
+    # 4. Detect chart type
+    chart.metadata.chart_type = _detect_chart_type_b(tree)
+
+    # 5. Extract data series
+    chart.series = _extract_series_b(tree, chart.metadata.chart_type)
+
+    # 6. Extract legend names and map to series
+    _extract_and_map_legend_b(tree, chart.series)
+
+    # 7. Confidence score
+    chart.confidence = _calculate_confidence(chart)
+
+    return chart
+
+
+def _extract_metadata_b(tree: etree._Element) -> ChartMetadata:
+    """Extract title/subtitle from Format B."""
+    meta = ChartMetadata()
+    for t in tree.findall(f".//{{{SVG_NS}}}text"):
+        cls = t.get("class", "")
+        text = (t.text or "").strip()
+        if not text:
+            continue
+        if cls == "title":
+            meta.title = text
+        elif cls == "subtitle":
+            meta.subtitle = text
+        elif cls == "source-text":
+            meta.source = text
+    return meta
+
+
+def _extract_y_axis_b(tree: etree._Element) -> AxisInfo:
+    """Extract Y-axis labels from Format B (class='y-tick-label')."""
+    axis = AxisInfo()
+    candidates = []
+
+    for t in tree.findall(f".//{{{SVG_NS}}}text"):
+        if t.get("class") != "y-tick-label":
+            continue
+        text = (t.text or "").strip()
+        if not text:
+            continue
+        y_pos = float(t.get("y", "0"))
+        candidates.append((text, y_pos))
+
+    # Also check for bar-label class (horizontal bar charts)
+    bar_labels = []
+    for t in tree.findall(f".//{{{SVG_NS}}}text"):
+        if t.get("class") != "bar-label":
+            continue
+        text = (t.text or "").strip()
+        if not text:
+            continue
+        y_pos = float(t.get("y", "0"))
+        bar_labels.append((text, y_pos))
+
+    if candidates:
+        candidates.sort(key=lambda c: c[1])
+        for label, pixel_y in candidates:
+            axis.labels.append(label)
+            axis.pixel_positions.append(pixel_y)
+            try:
+                axis.values.append(float(label.replace(",", "").replace("%", "")))
+            except ValueError:
+                axis.values.append(0)
+    elif bar_labels:
+        # Horizontal bar chart: Y-axis has category labels
+        bar_labels.sort(key=lambda c: c[1])
+        for label, pixel_y in bar_labels:
+            axis.labels.append(label)
+            axis.pixel_positions.append(pixel_y)
+            axis.values.append(0)
+
+    return axis
+
+
+def _extract_x_axis_b(tree: etree._Element) -> AxisInfo:
+    """Extract X-axis labels from Format B (class='tick-label')."""
+    axis = AxisInfo()
+    candidates = []
+
+    for t in tree.findall(f".//{{{SVG_NS}}}text"):
+        if t.get("class") != "tick-label":
+            continue
+        text = (t.text or "").strip()
+        if not text:
+            continue
+        x_pos = float(t.get("x", "0"))
+        candidates.append((text, x_pos))
+
+    if candidates:
+        candidates.sort(key=lambda c: c[1])
+        for label, pixel_x in candidates:
+            axis.labels.append(label)
+            axis.pixel_positions.append(pixel_x)
+
+    return axis
+
+
+def _extract_plot_area_b(
+    tree: etree._Element,
+    y_axis: AxisInfo,
+    x_axis: AxisInfo,
+) -> dict:
+    """Infer plot area from axis positions for Format B."""
+    # Default
+    pa = {"x": 80, "y": 95, "width": 840, "height": 485}
+
+    if y_axis.pixel_positions and x_axis.pixel_positions:
+        top_y = min(y_axis.pixel_positions) - 4
+        bot_y = max(y_axis.pixel_positions) + 4
+        left_x = min(x_axis.pixel_positions)
+        right_x = max(x_axis.pixel_positions)
+        pa = {
+            "x": left_x,
+            "y": top_y,
+            "width": right_x - left_x,
+            "height": bot_y - top_y,
+        }
+
+    return pa
+
+
+def _detect_chart_type_b(tree: etree._Element) -> ChartType:
+    """Detect chart type for Format B SVGs."""
+    rects = tree.findall(f".//{{{SVG_NS}}}rect")
+    polylines = tree.findall(f".//{{{SVG_NS}}}polyline")
+    polygons = tree.findall(f".//{{{SVG_NS}}}polygon")
+
+    # Filter out the background rect
+    data_rects = [r for r in rects if r.get("class") != "bg"]
+
+    # Bar chart: has colored rects (not just bg) and no data polylines
+    data_polylines = [p for p in polylines if p.get("points")]
+    if data_rects and not data_polylines:
+        return ChartType.BAR_HORIZONTAL
+
+    # Check subtitle for log scale
+    for t in tree.findall(f".//{{{SVG_NS}}}text"):
+        if t.get("class") == "subtitle":
+            subtitle = (t.text or "").lower()
+            if "log" in subtitle:
+                return ChartType.LOG_LINE
+
+    # Area chart: has polygons
+    if polygons:
+        return ChartType.AREA
+
+    return ChartType.LINE
+
+
+def _extract_series_b(
+    tree: etree._Element,
+    chart_type: ChartType,
+) -> list[SeriesData]:
+    """Extract data series from Format B SVGs."""
+    series_list = []
+
+    if chart_type == ChartType.BAR_HORIZONTAL:
+        return _extract_bar_series_b(tree)
+
+    # Line/Area charts: polylines with inline stroke
+    polylines = tree.findall(f".//{{{SVG_NS}}}polyline")
+    for pl in polylines:
+        points_str = pl.get("points", "")
+        if not points_str:
+            continue
+        stroke = pl.get("stroke", "")
+        if not stroke:
+            continue
+
+        series = SeriesData(name=f"series_{len(series_list)}", color=stroke)
+        points = _parse_points(points_str)
+        for x, y in points:
+            series.data_points.append(
+                DataPoint(x_label="", x_pixel=x, value=0, y_pixel=y)
+            )
+
+        if pl.get("fill", "none") != "none":
+            series.is_area = True
+
+        if series.data_points:
+            series_list.append(series)
+
+    return series_list
+
+
+def _extract_bar_series_b(tree: etree._Element) -> list[SeriesData]:
+    """Extract bar chart series from Format B SVGs."""
+    rects = tree.findall(f".//{{{SVG_NS}}}rect")
+    data_rects = [r for r in rects if r.get("class") != "bg" and r.get("fill")
+                  and r.get("fill") != "#FFFFFF"]
+
+    if not data_rects:
+        return []
+
+    # For bar charts, group all bars into one series (each bar is a category)
+    series = SeriesData(name="Values", color=data_rects[0].get("fill", "#3b82f6"))
+    for rect in data_rects:
+        x = float(rect.get("x", "0"))
+        y = float(rect.get("y", "0"))
+        width = float(rect.get("width", "0"))
+        height = float(rect.get("height", "0"))
+        series.data_points.append(
+            DataPoint(
+                x_label="", x_pixel=x + width,
+                value=0, y_pixel=y + height / 2,
+            )
+        )
+
+    series.data_points.sort(key=lambda p: p.y_pixel)
+    return [series]
+
+
+def _extract_and_map_legend_b(
+    tree: etree._Element,
+    series_list: list[SeriesData],
+) -> None:
+    """Extract legend entries from Format B and map to series by color."""
+    legend_entries = []
+    legend_texts = tree.findall(f".//{{{SVG_NS}}}text")
+
+    for t in legend_texts:
+        if t.get("class") != "legend-text":
+            continue
+        name = (t.text or "").strip()
+        if not name:
+            continue
+        legend_entries.append(name)
+
+    # Also find legend color lines (line elements with stroke, near legend text y)
+    legend_lines = []
+    for line_el in tree.findall(f".//{{{SVG_NS}}}line"):
+        stroke = line_el.get("stroke", "")
+        if stroke and stroke not in ("#CCCCCC", "#999999", ""):
+            y1 = float(line_el.get("y1", "0"))
+            y2 = float(line_el.get("y2", "0"))
+            # Legend lines are short horizontal lines
+            x1 = float(line_el.get("x1", "0"))
+            x2 = float(line_el.get("x2", "0"))
+            if abs(y1 - y2) < 1 and abs(x2 - x1) <= 30 and y1 > 620:
+                legend_lines.append({"color": stroke, "y": y1})
+
+    # Match legend names to series by color
+    if legend_entries and legend_lines:
+        for i, entry in enumerate(legend_entries):
+            if i < len(legend_lines):
+                color = legend_lines[i]["color"]
+                # Find matching series by color
+                for s in series_list:
+                    if s.color == color:
+                        s.name = entry
+                        break
+                else:
+                    # No color match; assign by order
+                    if i < len(series_list):
+                        series_list[i].name = entry
+    elif legend_entries:
+        # No colored lines found, assign by order
+        for i, entry in enumerate(legend_entries):
+            if i < len(series_list):
+                series_list[i].name = entry
+
+
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║  Format A Parser — legacy SVGs with .s0/.s4/.s5 classes                    ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+
+def _parse_format_a(svg_content: bytes, tree: etree._Element) -> ChartData:
+    """Parse Format A SVGs (legacy charts with sN CSS classes)."""
+    chart = ChartData()
+
+    chart.metadata = _extract_metadata(svg_content, tree)
+    styles = _extract_styles(svg_content)
+    chart.y_axis = _extract_y_axis(tree)
+    chart.x_axis = _extract_x_axis(tree)
+    chart.plot_area = _extract_plot_area(tree)
+    chart.metadata.chart_type = _detect_chart_type(tree, chart.metadata, styles)
+    chart.series = _extract_series(tree, styles)
+    legend_entries = _extract_legend(tree, styles)
+    _map_legend_to_series(chart.series, legend_entries, styles)
+    chart.confidence = _calculate_confidence(chart)
 
     return chart
 
@@ -144,10 +457,9 @@ def _get_color_for_class(styles: dict, class_name: str) -> str:
 
 def _extract_y_axis(tree: etree._Element) -> AxisInfo:
     """
-    Extract Y-axis labels. Found in text-anchor:end groups.
-    These are the groups with class containing text-anchor:end in their CSS.
-    In LSEG SVGs, Y-axis labels are in the last axis group, inside
-    text elements with explicit y positions and transform attributes.
+    Extract Y-axis labels (Format A). Found in text-anchor:end groups.
+    Y-axis labels are in axis groups, inside text elements with
+    explicit y positions and transform attributes.
     """
     axis = AxisInfo()
 

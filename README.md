@@ -1,93 +1,152 @@
-# hackathon
+# NOVA-C — Narrative Output from Visual Analytics – Charts
 
+An AI-powered SVG chart analysis tool that extracts data from SVG charts, detects trends and anomalies, and generates analyst-quality narratives using Google Gemini.
 
+## Features
 
-## Getting started
+- **SVG Chart Parsing** — Supports multiple SVG formats (legacy and generated charts)
+- **Auto Chart Type Detection** — Line, area, bar, dual-tone, log-scale
+- **Trend Engine** — Detects rising/falling/flat regimes, peaks, troughs, anomalies
+- **AI Narratives** — Generates Bloomberg-style commentary via Google Gemini
+- **Chatbot** — Ask questions about your chart data using AI
+- **News Integration** — Fetches relevant news headlines via Google News RSS
+- **ML Forecasting** — Time-series prediction with multiple models (Linear, Ridge, Lasso, SVR, Random Forest, GB, MLP, LSTM)
+- **Interactive Dashboard** — Dark-themed UI with Chart.js, drag-drop upload, hover tooltips
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## Prerequisites
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+- Python 3.10+
+- A Google Gemini API key (free tier available)
 
-## Add your files
+## Setup
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+### 1. Clone the repository
 
+```bash
+git clone <your-repo-url>
+cd codezilla
 ```
-cd existing_repo
-git remote add origin https://gitlab.dx1.lseg.com/Sakthivel.N/hackathon.git
-git branch -M main
-git push -uf origin main
+
+### 2. Install Python dependencies
+
+```bash
+pip install -r backend/requirements.txt
 ```
 
-## Integrate with your tools
+### 3. Get a Google Gemini API Key
 
-- [ ] [Set up project integrations](https://gitlab.dx1.lseg.com/Sakthivel.N/hackathon/-/settings/integrations)
+1. Go to [Google AI Studio](https://aistudio.google.com/apikey)
+2. Sign in with your Google account
+3. Click **"Create API Key"**
+4. Copy the key
 
-## Collaborate with your team
+### 4. Set the API key as an environment variable
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+**Windows (PowerShell):**
+```powershell
+$env:GEMINI_API_KEY = "your-gemini-api-key-here"
+```
 
-## Test and Deploy
+**Windows (Command Prompt):**
+```cmd
+set GEMINI_API_KEY=your-gemini-api-key-here
+```
 
-Use the built-in continuous integration in GitLab.
+**Linux / macOS:**
+```bash
+export GEMINI_API_KEY="your-gemini-api-key-here"
+```
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+To make it permanent, add the above line to your shell profile (`~/.bashrc`, `~/.zshrc`, etc.) or set it in Windows System Environment Variables.
 
-***
+### 5. (Optional) Choose a different Gemini model
 
-# Editing this README
+By default, the app uses `gemini-2.0-flash`. You can change it:
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+```powershell
+$env:GEMINI_MODEL = "gemini-2.0-flash"
+```
 
-## Suggestions for a good README
+Available models: `gemini-2.0-flash`, `gemini-1.5-flash`, `gemini-1.5-pro`, etc.
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+### 6. Start the server
 
-## Name
-Choose a self-explaining name for your project.
+```bash
+cd codezilla
+python -m uvicorn backend.app.main:app --host 127.0.0.1 --port 8000
+```
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+Then open: **http://127.0.0.1:8000**
 
 ## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+1. **Sign up / Log in** using any email and password
+2. **Upload an SVG chart** or click **Load Demo Charts** to analyze the bundled charts
+3. View the extracted data, trends, anomalies, and AI-generated narrative
+4. Use the **Chatbot** to ask questions about the chart
+5. Use the **Predictions** panel to forecast future values with ML models
+6. Select a time range on the chart to get news context for that period
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+## Project Structure
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+```
+codezilla/
+├── backend/
+│   ├── requirements.txt
+│   └── app/
+│       ├── main.py              # FastAPI routes & endpoints
+│       ├── models/
+│       │   └── schemas.py       # Pydantic data models
+│       ├── routers/
+│       │   └── auth.py          # Authentication routes
+│       ├── services/
+│       │   ├── auth.py          # JWT auth service
+│       │   ├── svg_parser.py    # SVG parsing (multi-format)
+│       │   ├── axis_calibrator.py # Pixel-to-value calibration
+│       │   ├── trend_engine.py  # Trend/anomaly detection
+│       │   ├── llm_narrator.py  # Google Gemini integration
+│       │   ├── news_search.py   # Google News RSS scraping
+│       │   └── predictor.py     # ML forecasting models
+│       └── static/
+│           └── index.html       # Frontend dashboard
+├── Chart SVGs/                  # Demo chart files
+│   ├── *.svg                    # Legacy format SVGs
+│   └── copy/                    # Generated format SVGs
+│       └── *.svg
+├── users.json                   # Local user database
+└── README.md
+```
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+## Environment Variables
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `GEMINI_API_KEY` | **Yes** | _(empty)_ | Your Google Gemini API key |
+| `GEMINI_MODEL` | No | `gemini-2.0-flash` | Gemini model to use |
+| `JWT_SECRET` | No | _(built-in default)_ | Secret for JWT token signing |
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+## Supported SVG Formats
 
-## License
-For open source projects, say how it is licensed.
+The parser auto-detects and handles two SVG formats:
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+- **Format A (Legacy):** Uses `.s0`/`.s4`/`.s5` CSS classes, clip-path groups, `rotate(360)` transforms
+- **Format B (Generated):** Uses `.title`/`.subtitle`/`.y-tick-label`/`.tick-label` CSS classes, flat structure with inline stroke attributes
+
+Both uploaded SVGs and demo SVGs from either format work seamlessly.
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/auth/signup` | Register a new user |
+| POST | `/api/auth/login` | Sign in |
+| POST | `/api/upload` | Upload and analyze an SVG chart |
+| POST | `/api/narrative` | Regenerate narrative with different tone |
+| POST | `/api/compare` | Compare multiple charts |
+| POST | `/api/chat` | Chat with AI about chart data |
+| POST | `/api/predict` | ML time-series forecasting |
+| POST | `/api/range-analysis` | News summary for a time range |
+| GET | `/api/demo` | Load all demo charts |
+| GET | `/api/charts` | List analyzed charts |
+| GET | `/api/charts/{id}` | Get specific chart analysis |
+| GET | `/api/health` | Health check |
